@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 
+import 'Widgets/Material Color.dart';
+
 const Color appBarText = Colors.black;
 const Color kWhiteColor = Colors.white;
 const Color kPrimaryColor = Color(0xFFFD5252);
+MaterialColor primaryColor = MaterialColor(0xFFFD5252, color1);
 const Color kBackgroundColor = Color(0xFFEEF3FC);
 const Color textColor = Color(0xFF7D849A);
 const Color HeadingColor = Color(0xFF000000);
