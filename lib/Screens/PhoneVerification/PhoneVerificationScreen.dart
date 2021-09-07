@@ -14,7 +14,7 @@ class PhoneverificationScreen extends StatefulWidget {
 
 class _PhoneverificationScreenState extends State<PhoneverificationScreen> {
   GlobalKey<FormState> _formKey = GlobalKey();
-  String Phone = "";
+  String phoneN = "";
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +48,7 @@ class _PhoneverificationScreenState extends State<PhoneverificationScreen> {
                       padding: const EdgeInsets.only(left: 10.0),
                       child: Text(
                         "We have sent you an sms with a code to number " +
-                            Phone,
+                            phoneN,
                         style: TextStyle(color: textColor),
                       ),
                     ),
@@ -68,7 +68,7 @@ class _PhoneverificationScreenState extends State<PhoneverificationScreen> {
                       ),
                       onChanged: (phone) {
                         setState(() {
-                          Phone = phone.completeNumber;
+                          phoneN = phone.completeNumber;
                         });
                         print(phone.completeNumber);
                       },

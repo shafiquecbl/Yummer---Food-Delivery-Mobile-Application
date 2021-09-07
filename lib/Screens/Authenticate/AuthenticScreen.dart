@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:secure_hops/Screens/PhoneVerification/PhoneVerificationScreen.dart';
+import 'package:secure_hops/Widgets/navigator.dart';
+import 'package:secure_hops/home.dart';
 import '../../Images.dart';
 import '../../constants.dart';
 import 'ForgotPassword.dart';
@@ -49,14 +51,15 @@ class _AuthenticScreenState extends State<AuthenticScreen> {
                             TextField(
                               controller: _emailTextEditingController,
                               decoration: const InputDecoration(
-                                  focusedBorder: UnderlineInputBorder(
+                                focusedBorder: UnderlineInputBorder(
+                                  borderSide:
+                                      BorderSide(color: Colors.redAccent),
+                                ),
+                                border: UnderlineInputBorder(
                                     borderSide:
-                                        BorderSide(color: Colors.redAccent),
-                                  ),
-                                  border: UnderlineInputBorder(
-                                      borderSide:
-                                          BorderSide(color: Colors.redAccent)),
-                                  labelText: 'Email'),
+                                        BorderSide(color: Colors.redAccent)),
+                                labelText: 'Email',
+                              ),
                               cursorColor: Colors.redAccent,
                               obscureText: false,
                             ),
@@ -88,10 +91,7 @@ class _AuthenticScreenState extends State<AuthenticScreen> {
                                 padding: const EdgeInsets.only(top: 50.0),
                                 child: GestureDetector(
                                   onTap: () {
-                                    Route route = MaterialPageRoute(
-                                        builder: (_) =>
-                                            PhoneverificationScreen());
-                                    Navigator.push(context, route);
+                                    navigatorPush(context, false, MyHomePage());
                                   },
                                   child: Stack(
                                     children: [

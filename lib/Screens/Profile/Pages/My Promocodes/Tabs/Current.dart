@@ -14,7 +14,7 @@ class _CurrentState extends State<Current> {
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
     return ListView.builder(
-      itemCount: 2,
+      itemCount: 10,
       itemBuilder: (BuildContext context, int index) {
         return SingleChildScrollView(
             child: Column(
@@ -36,7 +36,7 @@ class _CurrentState extends State<Current> {
                         child: Column(
                           children: [
                             ListTile(
-                              title: Text('Chicken Taste',
+                              title: Text('mcdonalds',
                                   style:
                                       TextStyle(fontWeight: FontWeight.w500)),
                               subtitle: Padding(
@@ -44,12 +44,14 @@ class _CurrentState extends State<Current> {
                                 child: Text(
                                   '50% OFF',
                                   style: TextStyle(
-                                      color: Colors.redAccent, fontSize: 20),
+                                      color: Colors.redAccent,
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.bold),
                                 ),
                               ),
                               trailing: Icon(
                                 Icons.copy,
-                                size: 18,
+                                size: 25,
                               ),
                             ),
                             Padding(
@@ -57,15 +59,8 @@ class _CurrentState extends State<Current> {
                                   const EdgeInsets.only(left: 10, bottom: 10),
                               child: Row(
                                 children: [
-                                  Icon(Icons.star_border_outlined,
-                                      size: 20, color: Colors.black54),
-                                  Text('5.0', style: style),
-                                  Text(' - ', style: style),
-                                  Icon(Icons.location_pin,
-                                      size: 20, color: Colors.black54),
-                                  Text('0.2KM', style: style),
-                                  Text(' - ', style: style),
-                                  Text('\$\$', style: style),
+                                  Text('Valid until June 30, 2021',
+                                      style: style),
                                 ],
                               ),
                             )

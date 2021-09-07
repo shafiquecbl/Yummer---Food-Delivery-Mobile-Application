@@ -53,7 +53,7 @@ class _MyFavoriteState extends State<MyFavorite>
     return Container(
       height: 35,
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 50),
+        padding: const EdgeInsets.symmetric(horizontal: 70),
         child: TabBar(
           overlayColor: color(Colors.transparent),
           controller: _tabController,

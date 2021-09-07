@@ -12,7 +12,7 @@ class _ResturantsState extends State<Resturants> {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 20),
       child: ListView.builder(
-        itemCount: 10,
+        itemCount: 6,
         itemBuilder: (BuildContext context, int index) {
           return CustomCard();
         },

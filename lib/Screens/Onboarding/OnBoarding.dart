@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:secure_hops/Screens/Authenticate/AuthenticScreen.dart';
+import 'package:secure_hops/Widgets/button.dart';
 import '../../Images.dart';
 import '../../constants.dart';
 import 'Content_OnBoarding.dart';
@@ -107,39 +108,59 @@ class _OnbordingState extends State<Onbording> {
                 ),
               ),
             ),
-            GestureDetector(
-              onTap: () {
-                if (currentIndex == contents.length - 1) {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => AuthenticScreen(),
-                    ),
-                  );
-                }
-                _controller.nextPage(
-                  duration: Duration(milliseconds: 100),
-                  curve: Curves.bounceIn,
-                );
-              },
-              child: Stack(
-                children: [
-                  Container(
-                    height: 60,
-                    margin: EdgeInsets.all(40),
-                    width: double.infinity,
-                    child: Image.asset(btn),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 60.0, left: 160),
-                    child: Text(
+            Padding(
+              padding: const EdgeInsets.only(bottom: 50.0, top: 30),
+              child: MyButton(
+                  text:
                       currentIndex == contents.length - 1 ? "Continue" : "Next",
-                      style: TextStyle(fontSize: 14, color: btntextColor),
-                    ),
-                  )
-                ],
-              ),
-            )
+                  onPressed: () {
+                    if (currentIndex == contents.length - 1) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => AuthenticScreen(),
+                        ),
+                      );
+                    }
+                    _controller.nextPage(
+                      duration: Duration(milliseconds: 100),
+                      curve: Curves.bounceIn,
+                    );
+                  }),
+            ),
+            // GestureDetector(
+            //   onTap: () {
+            //     if (currentIndex == contents.length - 1) {
+            //       Navigator.push(
+            //         context,
+            //         MaterialPageRoute(
+            //           builder: (_) => AuthenticScreen(),
+            //         ),
+            //       );
+            //     }
+            //     _controller.nextPage(
+            //       duration: Duration(milliseconds: 100),
+            //       curve: Curves.bounceIn,
+            //     );
+            //   },
+            //   child: Stack(
+            //     children: [
+            //       Container(
+            //         height: 60,
+            //         margin: EdgeInsets.all(40),
+            //         width: double.infinity,
+            //         child: Image.asset(btn),
+            //       ),
+            //       Padding(
+            //         padding: const EdgeInsets.only(top: 60.0, left: 160),
+            //         child: Text(
+            //           currentIndex == contents.length - 1 ? "Continue" : "Next",
+            //           style: TextStyle(fontSize: 14, color: btntextColor),
+            //         ),
+            //       )
+            //     ],
+            //   ),
+            // )
             // Stack(
             //   children:[ Container(
             //     height: 60,

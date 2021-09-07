@@ -18,7 +18,7 @@ class _OrderHistoryState extends State<OrderHistory> {
         backgroundColor: kBackgroundColor,
         appBar: appBar(context, title: 'Order History'),
         body: ListView.builder(
-            itemCount: 20,
+            itemCount: 6,
             itemBuilder: (context, index) {
               return OrderHistoryCard();
             }));

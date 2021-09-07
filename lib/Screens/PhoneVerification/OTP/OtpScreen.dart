@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:secure_hops/Screens/home.dart';
 import 'package:secure_hops/Widgets/AppBar.dart';
 import 'package:secure_hops/Widgets/navigator.dart';
 import 'package:secure_hops/home.dart';

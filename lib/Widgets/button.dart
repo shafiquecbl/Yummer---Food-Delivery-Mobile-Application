@@ -8,10 +8,11 @@ class MyButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
     return GestureDetector(
       onTap: onPressed,
       child: Container(
-        width: 350,
+        width: size.width / 1.2,
         height: 50,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(5),

@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:secure_hops/Screens/Profile/Pages/My%20Favorite/Tabs/Food.dart';
-import 'package:secure_hops/Screens/Profile/Pages/My%20Favorite/Tabs/Resturants.dart';
 import 'package:secure_hops/Screens/Profile/Pages/My%20Promocodes/Tabs/Current.dart';
 import 'package:secure_hops/Screens/Profile/Pages/My%20Promocodes/Tabs/Used.dart';
 import 'package:secure_hops/Widgets/AppBar.dart';

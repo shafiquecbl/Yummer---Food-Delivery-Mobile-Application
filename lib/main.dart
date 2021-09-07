@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:secure_hops/Screens/Onboarding/OnBoarding.dart';
 
 import 'package:secure_hops/home.dart';
 
@@ -15,7 +16,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(),
+      home: Onbording(),
     );
   }
 }

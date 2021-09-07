@@ -4,8 +4,7 @@ import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:secure_hops/Screens/home.dart';
 import 'package:secure_hops/Screens/Profile/profile.dart';
 import 'package:secure_hops/constants.dart';
-
-import 'Screens/Order/OrderHistory.dart';
+import 'Screens/order.dart';
 import 'Screens/search.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -56,7 +55,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   List<Widget> _buildScreens() {
-    return [Home(), Search(), OrderHistory(), Profile()];
+    return [Home(), Search(), Order(), Profile()];
   }
 
   List<PersistentBottomNavBarItem> _navBarsItems() {
