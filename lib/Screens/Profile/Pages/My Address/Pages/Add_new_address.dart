@@ -12,6 +12,9 @@ class _AddNewAddressState extends State<AddNewAddress> {
   String name = 'Kristin Watson';
   String email = 'kristinwatson@gmail.com';
   int? radioValue = 0;
+
+  FocusNode focusNode1 = FocusNode();
+
   InputBorder? focusedBorder = UnderlineInputBorder(
     borderSide: BorderSide(color: kPrimaryColor),
   );
@@ -19,11 +22,21 @@ class _AddNewAddressState extends State<AddNewAddress> {
     setState(() {
       radioValue = value;
       if (radioValue == 0) {
-        setState(() {
-          // dateValue = "proposal";
-        });
+        setState(() {});
       }
     });
+  }
+
+  listenNode() {
+    return focusNode1.addListener(() {
+      setState(() {});
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    focusNode1.dispose();
   }
 
   @override
@@ -39,9 +52,9 @@ class _AddNewAddressState extends State<AddNewAddress> {
               children: [
                 box(),
                 TextFormField(
+                    focusNode: focusNode1,
                     initialValue: name,
                     decoration: InputDecoration(
-                      focusedBorder: focusedBorder,
                       hintText: "Enter title",
                       hintStyle: TextStyle(color: Colors.grey),
                       labelText: "TITLE",
@@ -51,7 +64,6 @@ class _AddNewAddressState extends State<AddNewAddress> {
                 TextFormField(
                     initialValue: email,
                     decoration: InputDecoration(
-                      focusedBorder: focusedBorder,
                       hintText: "Enter address",
                       hintStyle: TextStyle(color: Colors.grey),
                       labelText: "NEW ADDRESS",
@@ -83,6 +95,12 @@ class _AddNewAddressState extends State<AddNewAddress> {
         ],
       ),
     );
+  }
+
+  Color? getColor(bool focus) {
+    if (focus) {
+      setState(() {});
+    }
   }
 
   Widget box() {
