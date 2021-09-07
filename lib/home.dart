@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
-import 'package:secure_hops/Screens/home.dart';
+import 'package:secure_hops/Screens/Home/home.dart';
 import 'package:secure_hops/Screens/Profile/profile.dart';
 import 'package:secure_hops/constants.dart';
 import 'Screens/order.dart';

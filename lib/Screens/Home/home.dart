@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../constants.dart';
+import '../../constants.dart';
+import 'components/DeliverCard.dart';
 
 class Home extends StatelessWidget {
   @override
@@ -19,18 +20,8 @@ class Home extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 20.0, top: 80),
-              child: Row(
-                children: [
-                  CircleAvatar(
-                    backgroundImage: NetworkImage(
-                      demoAvatar,
-                    ),
-                    radius: 30,
-                  ),
-                ],
-              ),
-            ),
+                padding: const EdgeInsets.only(left: 20.0, top: 80),
+                child: DeliverCard()),
           ],
         ));
   }
