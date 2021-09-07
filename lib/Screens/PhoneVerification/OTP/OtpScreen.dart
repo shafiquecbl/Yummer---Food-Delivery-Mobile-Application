@@ -57,7 +57,7 @@ class OtpScreen extends StatelessWidget {
                           "Resend.",
                           style: TextStyle(
                               decoration: TextDecoration.underline,
-                              color: ThemeColor),
+                              color: kPrimaryColor),
                         ),
                       ),
                     ],
