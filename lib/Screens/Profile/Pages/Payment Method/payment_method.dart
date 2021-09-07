@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:secure_hops/Images.dart';
 import 'package:secure_hops/Widgets/AppBar.dart';
 import 'package:secure_hops/Widgets/navigator.dart';
 import 'package:secure_hops/constants.dart';
@@ -53,7 +54,7 @@ class _PaymentMethodState extends State<PaymentMethod> {
                       direction: Axis.vertical,
                       children: [
                         Image.asset(
-                          'assets/image 5.png',
+                          applyPay,
                           width: 50,
                           height: 50,
                         ),
@@ -86,7 +87,7 @@ class _PaymentMethodState extends State<PaymentMethod> {
                       direction: Axis.vertical,
                       children: [
                         Image.asset(
-                          'assets/image 6.png',
+                          paypal,
                           width: 50,
                           height: 50,
                         ),

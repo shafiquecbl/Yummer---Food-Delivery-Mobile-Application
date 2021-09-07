@@ -63,6 +63,7 @@ class _OrdercardState extends State<Ordercard> {
                             ),
                           ],
                         ),
+                        // ignore: deprecated_member_use
                         FlatButton(
                             onPressed: () {},
                             child: Text("Repeat Order"),
