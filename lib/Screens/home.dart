@@ -18,14 +18,18 @@ class Home extends StatelessWidget {
                     image: AssetImage('assets/img.png'), fit: BoxFit.cover),
               ),
             ),
-            SizedBox(
-              height: 20,
-            ),
-            CircleAvatar(
-              backgroundImage: NetworkImage(
-                demoAvatar,
+            Padding(
+              padding: const EdgeInsets.only(left: 20.0, top: 80),
+              child: Row(
+                children: [
+                  CircleAvatar(
+                    backgroundImage: NetworkImage(
+                      demoAvatar,
+                    ),
+                    radius: 30,
+                  ),
+                ],
               ),
-              radius: 30,
             ),
           ],
         ));
