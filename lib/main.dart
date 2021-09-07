@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:secure_hops/Screens/Onboarding/OnBoarding.dart';
+
 import 'package:secure_hops/home.dart';
 
 void main() {
