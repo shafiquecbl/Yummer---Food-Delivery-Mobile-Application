@@ -8,6 +8,7 @@ const Color textColor = Color(0xFF7D849A);
 const Color HeadingColor = Color(0xFF000000);
 const Color btntextColor = Color(0xFFFFFFFF);
 const Color btncolor = Color(0xFFFF7F56);
+const Color kCardBackgroundColor = Color(0xFFC8CBD4);
 
 // Card Color
 

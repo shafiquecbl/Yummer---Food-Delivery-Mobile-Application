@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:secure_hops/Screens/Profile/Pages/My%20Favorite/Tabs/Food.dart';
 import 'package:secure_hops/Screens/Profile/Pages/My%20Favorite/Tabs/Resturants.dart';
+import 'package:secure_hops/Screens/Profile/Pages/My%20Promocodes/Tabs/Current.dart';
+import 'package:secure_hops/Screens/Profile/Pages/My%20Promocodes/Tabs/Used.dart';
 import 'package:secure_hops/Widgets/AppBar.dart';
 import 'package:secure_hops/Widgets/Material%20Color.dart';
 import 'package:secure_hops/constants.dart';
@@ -37,9 +39,9 @@ class _MyPromocodesState extends State<MyPromocodes>
                 controller: _tabController,
                 children: [
                   // first tab bar view widget
-                  Resturants(),
+                  Current(),
                   // second tab bar view widget
-                  Food(),
+                  Used(),
                 ],
               ),
             ),
