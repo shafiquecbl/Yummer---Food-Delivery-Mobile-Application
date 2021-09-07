@@ -32,7 +32,7 @@ class DeliverCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Container(
-                      width: size.width / 1.65,
+                      width: size.width / 1.7,
                       child: Text(
                         '8000 S Kirkland Ave, Chicago, IL ...',
                         maxLines: 1,
