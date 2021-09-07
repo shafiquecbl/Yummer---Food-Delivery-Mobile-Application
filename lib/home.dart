@@ -4,7 +4,7 @@ import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:secure_hops/Screens/Home/home.dart';
 import 'package:secure_hops/Screens/Profile/profile.dart';
 import 'package:secure_hops/constants.dart';
-import 'Screens/order.dart';
+import 'Screens/Order/order.dart';
 import 'Screens/search.dart';
 
 class MyHomePage extends StatefulWidget {

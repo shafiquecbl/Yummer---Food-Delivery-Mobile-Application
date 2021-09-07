@@ -12,7 +12,6 @@ class _CurrentState extends State<Current> {
   );
   @override
   Widget build(BuildContext context) {
-    var width = MediaQuery.of(context).size.width;
     return ListView.builder(
       itemCount: 10,
       itemBuilder: (BuildContext context, int index) {

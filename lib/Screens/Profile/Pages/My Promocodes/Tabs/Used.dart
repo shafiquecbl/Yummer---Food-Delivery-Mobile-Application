@@ -11,7 +11,6 @@ class _UsedState extends State<Used> {
   final TextStyle style = TextStyle(color: Colors.black54);
   @override
   Widget build(BuildContext context) {
-    var width = MediaQuery.of(context).size.width;
     return ListView.builder(
       itemCount: 10,
       itemBuilder: (BuildContext context, int index) {

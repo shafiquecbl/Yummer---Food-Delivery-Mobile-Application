@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-import '../../constants.dart';
+import 'package:secure_hops/constants.dart';
 
 class EmptyCart extends StatefulWidget {
   EmptyCart({Key? key}) : super(key: key);

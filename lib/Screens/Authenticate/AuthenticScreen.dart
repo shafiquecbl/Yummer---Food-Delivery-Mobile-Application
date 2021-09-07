@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
-import 'package:secure_hops/Screens/PhoneVerification/PhoneVerificationScreen.dart';
 import 'package:secure_hops/Widgets/navigator.dart';
 import 'package:secure_hops/home.dart';
 import '../../Images.dart';
