@@ -5,7 +5,7 @@ import 'package:secure_hops/Screens/Home/home.dart';
 import 'package:secure_hops/Screens/Profile/profile.dart';
 import 'package:secure_hops/constants.dart';
 import 'Screens/Order/order.dart';
-import 'Screens/search.dart';
+import 'Screens/Search/search.dart';
 
 class MyHomePage extends StatefulWidget {
   @override
