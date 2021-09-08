@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:secure_hops/Screens/Home/AllOffers.dart';
+import 'package:secure_hops/Widgets/navigator.dart';
 import 'package:secure_hops/constants.dart';
 
 import 'Categories.dart';
@@ -61,7 +63,29 @@ class DeliverCard extends StatelessWidget {
           ],
         ),
         SizedBox(
-          height: 100,
+          height: 15,
+        ),
+        Categories(),
+        Row(
+          children: [
+            Text(
+              "HOT OFFERS",
+              style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+            ),
+            Spacer(),
+            Padding(
+              padding: const EdgeInsets.only(right: 8.0),
+              child: GestureDetector(
+                onTap: () {
+                  navigatorPush(context, false, AllOffers());
+                },
+                child: Text(
+                  "All >",
+                  style: TextStyle(color: primaryColor),
+                ),
+              ),
+            )
+          ],
         ),
         Offercardlist(),
         Text(
