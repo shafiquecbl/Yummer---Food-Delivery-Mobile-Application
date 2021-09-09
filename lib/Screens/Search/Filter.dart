@@ -19,6 +19,7 @@ class _FilterState extends State<Filter> {
   bool isChecked = false;
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: appBar(context, title: "Filter"),
       body: Padding(
@@ -91,7 +92,7 @@ class _FilterState extends State<Filter> {
               color: Colors.grey,
             ),
             SizedBox(
-              height: 100,
+              height: size.height / 10,
             ),
             Text(
               "Cuisines",

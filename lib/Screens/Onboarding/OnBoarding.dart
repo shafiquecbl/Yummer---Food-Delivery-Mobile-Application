@@ -28,6 +28,7 @@ class _OnbordingState extends State<Onbording> {
 
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
     return SafeArea(
       child: Scaffold(
         backgroundColor: kBackgroundColor,
@@ -70,7 +71,7 @@ class _OnbordingState extends State<Onbording> {
                         ),
                         Image.asset(
                           contents[i].image,
-                          height: 250,
+                          height: size.height / 3.3,
                           width: 250,
                         ),
                         SizedBox(

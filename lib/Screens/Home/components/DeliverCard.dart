@@ -23,7 +23,7 @@ class DeliverCard extends StatelessWidget {
               radius: 30,
             ),
             Container(
-              height: 80,
+              height: size.height / 9.5,
               width: size.width / 1.3,
               child: Padding(
                 padding: const EdgeInsets.only(left: 15),
@@ -61,9 +61,6 @@ class DeliverCard extends StatelessWidget {
               ),
             ),
           ],
-        ),
-        SizedBox(
-          height: 15,
         ),
         Categories(),
         Row(
