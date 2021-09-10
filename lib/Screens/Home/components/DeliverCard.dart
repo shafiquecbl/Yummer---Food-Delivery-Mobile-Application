@@ -13,6 +13,9 @@ class DeliverCard extends StatelessWidget {
     var size = MediaQuery.of(context).size;
     return Column(
       children: [
+        SizedBox(
+          height: size.height / 8,
+        ),
         Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [

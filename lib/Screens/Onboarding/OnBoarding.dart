@@ -128,69 +128,6 @@ class _OnbordingState extends State<Onbording> {
                     );
                   }),
             ),
-            // GestureDetector(
-            //   onTap: () {
-            //     if (currentIndex == contents.length - 1) {
-            //       Navigator.push(
-            //         context,
-            //         MaterialPageRoute(
-            //           builder: (_) => AuthenticScreen(),
-            //         ),
-            //       );
-            //     }
-            //     _controller.nextPage(
-            //       duration: Duration(milliseconds: 100),
-            //       curve: Curves.bounceIn,
-            //     );
-            //   },
-            //   child: Stack(
-            //     children: [
-            //       Container(
-            //         height: 60,
-            //         margin: EdgeInsets.all(40),
-            //         width: double.infinity,
-            //         child: Image.asset(btn),
-            //       ),
-            //       Padding(
-            //         padding: const EdgeInsets.only(top: 60.0, left: 160),
-            //         child: Text(
-            //           currentIndex == contents.length - 1 ? "Continue" : "Next",
-            //           style: TextStyle(fontSize: 14, color: btntextColor),
-            //         ),
-            //       )
-            //     ],
-            //   ),
-            // )
-            // Stack(
-            //   children:[ Container(
-            //     height: 60,
-            //     margin: EdgeInsets.all(40),
-            //     width: double.infinity,
-            //     child: FlatButton(
-            //       child: Text(
-            //           currentIndex == contents.length - 1 ? "Continue" : "Next"),
-            //       onPressed: () {
-            //         if (currentIndex == contents.length - 1) {
-            //           Navigator.pushReplacement(
-            //             context,
-            //             MaterialPageRoute(
-            //               builder: (_) => AuthenticScreen(),
-            //             ),
-            //           );
-            //         }
-            //         _controller.nextPage(
-            //           duration: Duration(milliseconds: 100),
-            //           curve: Curves.bounceIn,
-            //         );
-            //       },
-            //       color: Colors.redAccent,
-            //       textColor: Colors.white,
-            //       shape: RoundedRectangleBorder(
-            //         borderRadius: BorderRadius.circular(20),
-            //       ),
-            //     ),
-            //   ),
-            // ])
           ],
         ),
       ),

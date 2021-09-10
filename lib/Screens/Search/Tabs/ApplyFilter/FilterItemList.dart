@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:secure_hops/Screens/Home/ProductDetailScreens/ProductDetailScreen.dart';
+import 'package:secure_hops/Widgets/navigator.dart';
 import 'package:secure_hops/constants.dart';
 
 class FilterItemList extends StatelessWidget {
@@ -11,7 +13,7 @@ class FilterItemList extends StatelessWidget {
       color: Colors.black54,
     );
     return GridView.count(
-        childAspectRatio: 0.9,
+        childAspectRatio: 0.8,
         padding: EdgeInsets.symmetric(
           horizontal: 20,
         ),
@@ -33,31 +35,36 @@ class Card extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.white,
-      child: Column(
-        children: [
-          Container(
-            height: 130,
-            decoration: BoxDecoration(color: textColor),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "Caramel cake with beries",
-                  style: TextStyle(fontWeight: FontWeight.w700),
-                ),
-                Text(
-                  "\$ 64",
-                  style: TextStyle(color: textColor),
-                )
-              ],
+    return InkWell(
+      onTap: () {
+        navigatorPush(context, false, ProductDetails());
+      },
+      child: Container(
+        color: Colors.white,
+        child: Column(
+          children: [
+            Container(
+              height: 130,
+              decoration: BoxDecoration(color: textColor),
             ),
-          ),
-        ],
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Caramel cake with beries",
+                    style: TextStyle(fontWeight: FontWeight.w700),
+                  ),
+                  Text(
+                    "\$ 64",
+                    style: TextStyle(color: textColor),
+                  )
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -69,105 +69,116 @@ class _AppplyFilterState extends State<AppplyFilter> {
                   ),
                 ),
                 SizedBox(
-                  height: size.height / 6,
+                  height: size.height / 7,
                 ),
-                Container(
-                  height: size.height / 3,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 20.0, left: 20),
-                        child: Container(
-                          height: 50,
-                          width: 50,
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                                image: AssetImage('assets/croissant 1.png'),
-                                fit: BoxFit.cover),
+                Column(
+                  children: [
+                    SizedBox(
+                      height: size.height / 12,
+                    ),
+                    Container(
+                      height: size.height / 4.3,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding:
+                                const EdgeInsets.only(bottom: 20.0, left: 20),
+                            child: Container(
+                              height: 50,
+                              width: 50,
+                              decoration: BoxDecoration(
+                                image: DecorationImage(
+                                    image: AssetImage('assets/croissant 1.png'),
+                                    fit: BoxFit.cover),
+                              ),
+                            ),
                           ),
-                        ),
-                      ),
-                      Container(
-                        height: size.height / 7,
-                        width: size.width / 1.3,
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 15, top: 30),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Text('Croissant Cafe',
-                                  style: TextStyle(
-                                      fontSize: 20,
-                                      color: kWhiteColor,
-                                      fontWeight: FontWeight.w500)),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                          Container(
+                            height: size.height / 3,
+                            width: size.width / 1.3,
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 15, top: 30),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
-                                  Container(
-                                    width: size.width / 1.7,
-                                    child: Text(
-                                      'Bakery',
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
+                                  Text('Croissant Cafe',
                                       style: TextStyle(
-                                          color: kWhiteColor, fontSize: 16),
+                                          fontSize: 20,
+                                          color: kWhiteColor,
+                                          fontWeight: FontWeight.w500)),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Container(
+                                        width: size.width / 1.7,
+                                        child: Text(
+                                          'Bakery',
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: TextStyle(
+                                              color: kWhiteColor, fontSize: 16),
+                                        ),
+                                      ),
+                                      IconButton(
+                                          onPressed: () {
+                                            settingModalBottomSheet(context);
+                                          },
+                                          icon: Icon(
+                                            Icons.info_outline,
+                                            color: kWhiteColor,
+                                          )),
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    height: size.height / 60,
+                                  ),
+                                  Container(
+                                    height: 40,
+                                    width: size.width / 1.5,
+                                    decoration:
+                                        BoxDecoration(color: Colors.white),
+                                    child: Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(left: 10.0),
+                                          child: Icon(
+                                            Icons.delivery_dining_outlined,
+                                            color: primaryColor,
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(left: 8.0),
+                                          child: Text("Free Deliver From "),
+                                        ),
+                                        Spacer(),
+                                        Padding(
+                                          padding: const EdgeInsets.only(
+                                              right: 10.0),
+                                          child: Text(
+                                            "\$ 200",
+                                            style: TextStyle(
+                                                color: primaryColor,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ),
-                                  IconButton(
-                                      onPressed: () {
-                                        settingModalBottomSheet(context);
-                                      },
-                                      icon: Icon(
-                                        Icons.info_outline,
-                                        color: kWhiteColor,
-                                      )),
                                 ],
                               ),
-                              SizedBox(
-                                height: size.height / 60,
-                              ),
-                              Container(
-                                height: 40,
-                                width: size.width / 1.7,
-                                decoration: BoxDecoration(color: Colors.white),
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Padding(
-                                      padding:
-                                          const EdgeInsets.only(left: 10.0),
-                                      child: Icon(
-                                        Icons.delivery_dining_outlined,
-                                        color: primaryColor,
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(left: 8.0),
-                                      child: Text("Free Deliver From "),
-                                    ),
-                                    Spacer(),
-                                    Padding(
-                                      padding:
-                                          const EdgeInsets.only(right: 10.0),
-                                      child: Text(
-                                        "\$ 200",
-                                        style: TextStyle(
-                                            color: primaryColor,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
+                            ),
                           ),
-                        ),
+                        ],
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ],
             ),
