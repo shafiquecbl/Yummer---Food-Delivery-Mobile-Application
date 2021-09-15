@@ -17,6 +17,11 @@ dependencies:
   font_awesome_flutter: ^9.1.0
   google_fonts:
   intl_phone_field: ^2.0.1
+  http: ^0.13.3
+  flutter_facebook_auth: ^3.5.1
+  firebase_auth: ^3.1.1
+  firebase_core: ^1.6.0
+  provider: ^6.0.0
 
 dev_dependencies:
   flutter_test:

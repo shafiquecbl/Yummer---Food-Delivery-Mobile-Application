@@ -1,7 +1,15 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
+import 'package:http/http.dart' as http;
+import 'package:secure_hops/API/Api_Services/Api_Manager.dart';
+import 'package:secure_hops/API/Api_Services/loginModel.dart';
+import 'package:secure_hops/Widgets/button.dart';
+import 'package:secure_hops/Widgets/loading.dart';
 import 'package:secure_hops/Widgets/navigator.dart';
+import 'package:secure_hops/Widgets/progresshub.dart';
 import 'package:secure_hops/home.dart';
 import '../../Images.dart';
 import '../../constants.dart';
@@ -21,6 +29,39 @@ class _AuthenticScreenState extends State<AuthenticScreen> {
   final TextEditingController _passwordTextEditingController =
       TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  bool hidePassword = true;
+  bool isApiCallProcess = false;
+
+  final scaffoldKey = GlobalKey<ScaffoldState>();
+
+  _login() async {
+    showLoadingDialog(context);
+    var data = {
+      'userName': _emailTextEditingController.text,
+      'pass': _passwordTextEditingController.text,
+    };
+
+    var client = http.Client();
+    try {
+      http.Response response = await client
+          .post(Uri.parse('https://www.ohready1.com/u/usr/login'), body: data);
+
+      if (response.statusCode == 200 || response.statusCode == 400) {
+        var result = json.decode(response.body);
+        print(result);
+
+        if (result['result'] == 'true') {
+          Navigator.pop(context);
+          navigatorPush(context, false, MyHomePage());
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: const Text('Wrong email or password!')));
+        }
+      }
+    } finally {
+      client.close();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,8 +88,19 @@ class _AuthenticScreenState extends State<AuthenticScreen> {
                         padding: const EdgeInsets.all(20.0),
                         child: Column(
                           children: [
-                            TextField(
+                            TextFormField(
                               controller: _emailTextEditingController,
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Please enter email';
+                                }
+                                if (!RegExp(
+                                        r"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")
+                                    .hasMatch(value)) {
+                                  return 'Please enter a valid email Address';
+                                }
+                                return null;
+                              },
                               decoration: const InputDecoration(
                                 focusedBorder: UnderlineInputBorder(
                                   borderSide:
@@ -57,20 +109,29 @@ class _AuthenticScreenState extends State<AuthenticScreen> {
                                 border: UnderlineInputBorder(
                                     borderSide:
                                         BorderSide(color: Colors.redAccent)),
-                                labelText: 'Email',
+                                labelText: 'Email/UserName',
                               ),
                               cursorColor: Colors.redAccent,
                               obscureText: false,
                             ),
-                            TextField(
+                            TextFormField(
                               controller: _passwordTextEditingController,
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Please enter Password';
+                                }
+                                return null;
+                              },
                               decoration: const InputDecoration(
-                                  focusedBorder: UnderlineInputBorder(
-                                    borderSide:
-                                        BorderSide(color: Colors.redAccent),
-                                  ),
-                                  border: UnderlineInputBorder(),
-                                  labelText: 'Password'),
+                                focusedBorder: UnderlineInputBorder(
+                                  borderSide:
+                                      BorderSide(color: Colors.redAccent),
+                                ),
+                                border: UnderlineInputBorder(),
+                                labelText: 'Password',
+
+                                // suffixIcon: IconButton(onPressed: onPressed, icon: icon)
+                              ),
                               obscureText: true,
                             ),
                             Padding(
@@ -86,45 +147,13 @@ class _AuthenticScreenState extends State<AuthenticScreen> {
                                     style: TextStyle(color: Colors.redAccent),
                                   )),
                             ),
-                            Padding(
-                                padding: const EdgeInsets.only(top: 50.0),
-                                child: GestureDetector(
-                                  onTap: () {
-                                    navigatorPush(context, false, MyHomePage());
-                                  },
-                                  child: Stack(
-                                    children: [
-                                      Container(
-                                        child: Image.asset(btn),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.only(
-                                            top: 10.0, left: 120),
-                                        child: Text(
-                                          "SIGN IN",
-                                          style: TextStyle(
-                                              color: btntextColor,
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 20),
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                )
-                                // ElevatedButton(
-                                //   child: Text("SIGN IN",style: TextStyle(color: Colors.white),),
-                                //   onPressed: (){
-                                //   },
-                                //   style: ElevatedButton.styleFrom(
-                                //       primary: Colors.redAccent,
-                                //       padding: EdgeInsets.symmetric(horizontal: 80, vertical: 10),
-                                //       textStyle: TextStyle(
-                                //           fontSize: 30,
-                                //           fontWeight: FontWeight.bold)),
-                                //
-                                //
-                                // ),
-                                ),
+                            MyButton(
+                                text: "Signin",
+                                onPressed: () async {
+                                  if (_formKey.currentState!.validate()) {
+                                    _login();
+                                  }
+                                }),
                             Padding(
                               padding: const EdgeInsets.all(10.0),
                               child: Row(

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "76886533613",
+    "project_id": "yummer-fb25d",
+    "storage_bucket": "yummer-fb25d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:76886533613:android:9ee6308b8784f9b940b3e4",
+        "android_client_info": {
+          "package_name": "com.example.secure_hops_yummer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "76886533613-j5sr875uccq4bbchlli27m0lbu4e76s4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBJal8p-LQlk_x0yLK-c8_gIW7Y8Xe0brc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "76886533613-j5sr875uccq4bbchlli27m0lbu4e76s4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

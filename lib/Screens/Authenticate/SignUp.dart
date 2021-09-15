@@ -1,9 +1,18 @@
+import 'dart:convert';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+
 import 'package:secure_hops/Screens/PhoneVerification/PhoneVerificationScreen.dart';
+import 'package:secure_hops/Widgets/button.dart';
+import 'package:secure_hops/Widgets/loading.dart';
+import 'package:secure_hops/Widgets/navigator.dart';
 import '../../Images.dart';
 import '../../constants.dart';
-import 'AuthenticScreen.dart';
+import 'Login.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({Key? key}) : super(key: key);
@@ -22,8 +31,52 @@ class _SignUpState extends State<SignUp> {
   final TextEditingController _cPasswordTextEditingController =
       TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  _regiter() async {
+    showLoadingDialog(context);
+    var data = {
+      'email': _emailTextEditingController.text,
+      'userName': _nameTextEditingController.text,
+      'pass': _passwordTextEditingController.text,
+      'mobile': "",
+      'from': "",
+      'facebookId': "",
+      'googleId': ""
+    };
+
+    var client = http.Client();
+    try {
+      http.Response uriResponse = await client
+          .post(Uri.parse('https://www.ohready1.com/u/usr/signup'), body: data);
+      var result = json.decode(uriResponse.body);
+      print(result);
+      if (result['result'] == 'true') {
+        Navigator.pop(context);
+        navigatorPush(context, false, PhoneverificationScreen());
+      } else if (result['result'] == 'alreadyEmail') {
+        Navigator.pop(context);
+        print("Email already Exist, Use another!");
+        ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: const Text('Email already Exist, Use another!')));
+      } else if (result['result'] == 'alreadyName') {
+        Navigator.pop(context);
+        print("UserName already Exist, Use another!");
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: const Text('UserName already Exist, Use another!')));
+      } else if (result['result'] == 'error') {
+        Navigator.pop(context);
+        print("Unable to register please try again!");
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: const Text('Unable to register please try again!')));
+      }
+    } finally {
+      client.close();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
     return SafeArea(
         child: Scaffold(
       backgroundColor: kBackgroundColor,
@@ -47,19 +100,36 @@ class _SignUpState extends State<SignUp> {
                       padding: const EdgeInsets.all(20.0),
                       child: Column(
                         children: [
-                          TextField(
+                          TextFormField(
                             controller: _nameTextEditingController,
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please enter Password';
+                              }
+                              return null;
+                            },
                             decoration: const InputDecoration(
                                 focusedBorder: UnderlineInputBorder(
                                   borderSide:
                                       BorderSide(color: Colors.redAccent),
                                 ),
                                 border: UnderlineInputBorder(),
-                                labelText: 'Name'),
+                                labelText: 'User Name'),
                             obscureText: false,
                           ),
-                          TextField(
+                          TextFormField(
                             controller: _emailTextEditingController,
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please enter email';
+                              }
+                              if (!RegExp(
+                                      r"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")
+                                  .hasMatch(value)) {
+                                return 'Please enter a valid email Address';
+                              }
+                              return null;
+                            },
                             decoration: const InputDecoration(
                                 focusedBorder: UnderlineInputBorder(
                                   borderSide:
@@ -69,8 +139,17 @@ class _SignUpState extends State<SignUp> {
                                 labelText: 'Email'),
                             obscureText: false,
                           ),
-                          TextField(
+                          TextFormField(
                             controller: _passwordTextEditingController,
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please enter Password';
+                              }
+                              if (value.trim().length < 4) {
+                                return 'Password must be at least 4 characters in length';
+                              }
+                              return null;
+                            },
                             decoration: const InputDecoration(
                                 focusedBorder: UnderlineInputBorder(
                                   borderSide:
@@ -80,8 +159,21 @@ class _SignUpState extends State<SignUp> {
                                 labelText: 'Password'),
                             obscureText: true,
                           ),
-                          TextField(
+                          TextFormField(
                             controller: _cPasswordTextEditingController,
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please enter confirm Password';
+                              }
+                              if (value.trim().length < 4) {
+                                return 'Password must be at least 4 characters in length';
+                              }
+                              if (_passwordTextEditingController.text !=
+                                  _cPasswordTextEditingController.text) {
+                                return 'Password does not match!';
+                              }
+                              return null;
+                            },
                             decoration: const InputDecoration(
                                 focusedBorder: UnderlineInputBorder(
                                   borderSide:
@@ -91,48 +183,14 @@ class _SignUpState extends State<SignUp> {
                                 labelText: 'Confirm Password'),
                             obscureText: true,
                           ),
-                          Padding(
-                              padding: const EdgeInsets.only(top: 50.0),
-                              child: GestureDetector(
-                                onTap: () {
-                                  Route route = MaterialPageRoute(
-                                      builder: (_) =>
-                                          PhoneverificationScreen());
-                                  Navigator.pushReplacement(context, route);
-                                },
-                                child: Stack(
-                                  children: [
-                                    Container(
-                                      child: Image.asset(btn),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(
-                                          top: 10.0, left: 120),
-                                      child: Text(
-                                        "SIGN UP",
-                                        style: TextStyle(
-                                            color: btntextColor,
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 20),
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              )
-                              // ElevatedButton(
-                              //   child: Text("SIGN UP",style: TextStyle(color: Colors.white),),
-                              //   onPressed: (){
-                              //   },
-                              //   style: ElevatedButton.styleFrom(
-                              //       primary: Colors.redAccent,
-                              //       padding: EdgeInsets.symmetric(horizontal: 80, vertical: 10),
-                              //       textStyle: TextStyle(
-                              //           fontSize: 30,
-                              //           fontWeight: FontWeight.bold)),
-                              //
-                              //
-                              // ),
-                              ),
+                          SizedBox(height: size.height / 14),
+                          MyButton(
+                              text: "Signup",
+                              onPressed: () async {
+                                if (_formKey.currentState!.validate()) {
+                                  _regiter();
+                                }
+                              }),
                           Padding(
                             padding: const EdgeInsets.all(10.0),
                             child: Row(

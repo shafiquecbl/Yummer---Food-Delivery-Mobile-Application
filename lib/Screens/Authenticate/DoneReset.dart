@@ -5,7 +5,7 @@ import 'package:secure_hops/Widgets/navigator.dart';
 
 import '../../Images.dart';
 import '../../constants.dart';
-import 'AuthenticScreen.dart';
+import 'Login.dart';
 
 class DoneReset extends StatefulWidget {
   const DoneReset({Key? key}) : super(key: key);

@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:secure_hops/Screens/Authenticate/AuthenticScreen.dart';
+import 'package:secure_hops/Screens/Authenticate/Login.dart';
 import 'package:secure_hops/Widgets/button.dart';
 import '../../constants.dart';
 import 'Content_OnBoarding.dart';
