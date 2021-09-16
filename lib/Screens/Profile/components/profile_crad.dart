@@ -1,10 +1,13 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:secure_hops/Screens/Profile/Pages/Edit%20Profile/Profile_Edit_Page.dart';
 import 'package:secure_hops/Widgets/navigator.dart';
 import 'package:secure_hops/constants.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class ProfileCard extends StatelessWidget {
+  User? user = FirebaseAuth.instance.currentUser;
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -20,17 +23,17 @@ class ProfileCard extends StatelessWidget {
             Expanded(
               child: ListTile(
                 leading: CircleAvatar(
-                  backgroundImage: NetworkImage(
-                    demoAvatar,
-                  ),
+                  backgroundImage: NetworkImage(demoAvatar
+                      // user!.photoURL.toString(),
+                      ),
                   radius: 30,
                 ),
                 title: Text(
-                  'Kristin Watson',
+                  "Hamza",
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
                 ),
                 subtitle: Text(
-                  'kristinwatson@gmail.com',
+                  "hamza",
                 ),
               ),
             ),

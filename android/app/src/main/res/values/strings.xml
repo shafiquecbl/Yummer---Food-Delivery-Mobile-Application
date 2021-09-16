@@ -3,11 +3,11 @@
     <string name="app_name">Yummer</string>
 
     <!-- Replace "000000000000" with your Facebook App ID here. -->
-    <string name="facebook_app_id">1036346693784273</string>
+    <string name="facebook_app_id">152464723736773</string>
 
     <!--
       Replace "000000000000" with your Facebook App ID here.
       **NOTE**: The scheme needs to start with `fb` and then your ID.
     -->
-    <string name="fb_login_protocol_scheme">fb1036346693784273</string>
+    <string name="fb_login_protocol_scheme">fb152464723736773</string>
 </resources>

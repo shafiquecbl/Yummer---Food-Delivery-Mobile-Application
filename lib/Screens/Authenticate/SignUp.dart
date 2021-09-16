@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'dart:math';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -10,9 +12,12 @@ import 'package:secure_hops/Screens/PhoneVerification/PhoneVerificationScreen.da
 import 'package:secure_hops/Widgets/button.dart';
 import 'package:secure_hops/Widgets/loading.dart';
 import 'package:secure_hops/Widgets/navigator.dart';
+import 'package:secure_hops/home.dart';
 import '../../Images.dart';
 import '../../constants.dart';
 import 'Login.dart';
+import 'facebook_login.dart';
+import 'google_login.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({Key? key}) : super(key: key);
@@ -32,22 +37,32 @@ class _SignUpState extends State<SignUp> {
       TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  _regiter() async {
+  User? user = FirebaseAuth.instance.currentUser;
+  late String facebookId;
+  late String googleId;
+  late String accountype;
+
+  regiter({@required String? accountType}) async {
     showLoadingDialog(context);
     var data = {
       'email': _emailTextEditingController.text,
       'userName': _nameTextEditingController.text,
       'pass': _passwordTextEditingController.text,
+      'firstName': "",
+      'lastName': "",
+      'accountType': accountType,
       'mobile': "",
-      'from': "",
+      'from': "Mobile App",
       'facebookId': "",
       'googleId': ""
     };
 
     var client = http.Client();
     try {
-      http.Response uriResponse = await client
-          .post(Uri.parse('https://www.ohready1.com/u/usr/signup'), body: data);
+      http.Response uriResponse = await client.post(
+          Uri.parse('https://www.ohready1.com/api/CustomersApi/signup'),
+          body: data);
+
       var result = json.decode(uriResponse.body);
       print(result);
       if (result['result'] == 'true') {
@@ -188,7 +203,7 @@ class _SignUpState extends State<SignUp> {
                               text: "Signup",
                               onPressed: () async {
                                 if (_formKey.currentState!.validate()) {
-                                  _regiter();
+                                  regiter(accountType: 'email');
                                 }
                               }),
                           Padding(
@@ -220,7 +235,9 @@ class _SignUpState extends State<SignUp> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 GestureDetector(
-                                  onTap: () {},
+                                  onTap: () async {
+                                    facebookLogin();
+                                  },
                                   child: Container(
                                     padding: EdgeInsets.all(20),
                                     decoration: new BoxDecoration(
@@ -240,28 +257,26 @@ class _SignUpState extends State<SignUp> {
                                 Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: GestureDetector(
-                                    onTap: () {},
-                                    child: Container(
-                                      padding: EdgeInsets.all(20),
-                                      decoration: new BoxDecoration(
-                                        border: Border.all(
-                                          width: 2,
-                                          color: Colors.blue,
-                                        ),
-                                        shape: BoxShape.circle,
-                                      ),
-                                      child: Image.asset(
-                                        "assets/twitter.png",
-                                        height: 20,
-                                        width: 20,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: GestureDetector(
-                                    onTap: () {},
+                                    onTap: () async {
+                                      showLoadingDialog(context);
+                                      try {
+                                        await GoogleLogin()
+                                            .signInWithGoogle()
+                                            .then((value) {
+                                          googleId = value.additionalUserInfo!
+                                              .profile!['id'];
+                                          regiter(accountType: 'google');
+                                        });
+                                        Navigator.pop(context);
+                                        navigatorPush(
+                                            context, false, MyHomePage());
+                                      } catch (error) {
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(SnackBar(
+                                                content: const Text(
+                                                    'Email already Exist, Use another!')));
+                                      }
+                                    },
                                     child: Container(
                                       padding: EdgeInsets.all(20),
                                       decoration: new BoxDecoration(
@@ -291,5 +306,23 @@ class _SignUpState extends State<SignUp> {
         ),
       ),
     ));
+  }
+
+  facebookLogin() async {
+    showLoadingDialog(context);
+    try {
+      await SocialLogin().signInWithFacebook().then((value) {
+        facebookId = value!.additionalUserInfo!.profile!['id'];
+        regiter(accountType: 'facebook');
+      });
+      Navigator.pop(context);
+      Navigator.pop(context);
+
+      navigatorPush(context, false, MyHomePage());
+    } catch (error) {
+      Navigator.pop(context);
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: const Text('Email already Exist, Use another!')));
+    }
   }
 }

@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:secure_hops/Screens/Home/AllOffers.dart';
 import 'package:secure_hops/Widgets/navigator.dart';
@@ -8,6 +9,7 @@ import 'ItemList.dart';
 import 'OffercardList.dart';
 
 class DeliverCard extends StatelessWidget {
+  User? user = FirebaseAuth.instance.currentUser;
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -19,11 +21,14 @@ class DeliverCard extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            CircleAvatar(
-              backgroundImage: NetworkImage(
-                demoAvatar,
+            Padding(
+              padding: const EdgeInsets.only(left: 15.0),
+              child: CircleAvatar(
+                backgroundImage: NetworkImage(demoAvatar
+                    // user!.photoURL.toString(),
+                    ),
+                radius: 30,
               ),
-              radius: 30,
             ),
             Container(
               height: size.height / 9.5,

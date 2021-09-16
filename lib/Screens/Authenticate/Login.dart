@@ -15,6 +15,8 @@ import '../../Images.dart';
 import '../../constants.dart';
 import 'ForgotPassword.dart';
 import 'SignUp.dart';
+import 'facebook_login.dart';
+import 'google_login.dart';
 
 class AuthenticScreen extends StatefulWidget {
   const AuthenticScreen({Key? key}) : super(key: key);
@@ -31,6 +33,8 @@ class _AuthenticScreenState extends State<AuthenticScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool hidePassword = true;
   bool isApiCallProcess = false;
+  late String googleId;
+  late String facebookId;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -43,8 +47,9 @@ class _AuthenticScreenState extends State<AuthenticScreen> {
 
     var client = http.Client();
     try {
-      http.Response response = await client
-          .post(Uri.parse('https://www.ohready1.com/u/usr/login'), body: data);
+      http.Response response = await client.post(
+          Uri.parse('https://www.ohready1.com/api/CustomersApi/login'),
+          body: data);
 
       if (response.statusCode == 200 || response.statusCode == 400) {
         var result = json.decode(response.body);
@@ -65,6 +70,7 @@ class _AuthenticScreenState extends State<AuthenticScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
     return SafeArea(
       child: Scaffold(
         backgroundColor: kBackgroundColor,
@@ -147,12 +153,16 @@ class _AuthenticScreenState extends State<AuthenticScreen> {
                                     style: TextStyle(color: Colors.redAccent),
                                   )),
                             ),
+                            SizedBox(
+                              height: size.height / 10,
+                            ),
                             MyButton(
                                 text: "Signin",
                                 onPressed: () async {
-                                  if (_formKey.currentState!.validate()) {
-                                    _login();
-                                  }
+                                  navigatorPush(context, false, MyHomePage());
+                                  // if (_formKey.currentState!.validate()) {
+                                  //   _login();
+                                  // }
                                 }),
                             Padding(
                               padding: const EdgeInsets.all(10.0),
@@ -183,8 +193,26 @@ class _AuthenticScreenState extends State<AuthenticScreen> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   GestureDetector(
-                                    onTap: () {
-                                      //login by facebook
+                                    onTap: () async {
+                                      showLoadingDialog(context);
+                                      try {
+                                        await SocialLogin()
+                                            .signInWithFacebook()
+                                            .then((value) {
+                                          facebookId = value!
+                                              .additionalUserInfo!
+                                              .profile!['id'];
+                                          _login();
+                                        });
+                                        Navigator.pop(context);
+                                        navigatorPush(
+                                            context, false, MyHomePage());
+                                      } catch (error) {
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(SnackBar(
+                                                content: const Text(
+                                                    'Email already Exist, Use another!')));
+                                      }
                                     },
                                     child: Container(
                                       padding: EdgeInsets.all(20),
@@ -205,31 +233,25 @@ class _AuthenticScreenState extends State<AuthenticScreen> {
                                   Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: GestureDetector(
-                                      onTap: () {
-                                        //login by twitter
-                                      },
-                                      child: Container(
-                                        padding: EdgeInsets.all(20),
-                                        decoration: new BoxDecoration(
-                                          border: Border.all(
-                                            width: 2,
-                                            color: Colors.blue,
-                                          ),
-                                          shape: BoxShape.circle,
-                                        ),
-                                        child: Image.asset(
-                                          "assets/twitter.png",
-                                          height: 20,
-                                          width: 20,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: GestureDetector(
-                                      onTap: () {
-                                        //login by google
+                                      onTap: () async {
+                                        showLoadingDialog(context);
+                                        try {
+                                          await GoogleLogin()
+                                              .signInWithGoogle()
+                                              .then((value) {
+                                            googleId = value.additionalUserInfo!
+                                                .profile!['id'];
+                                            _login();
+                                          });
+                                          Navigator.pop(context);
+                                          navigatorPush(
+                                              context, false, MyHomePage());
+                                        } catch (error) {
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(SnackBar(
+                                                  content: const Text(
+                                                      'Email already Exist, Use another!')));
+                                        }
                                       },
                                       child: Container(
                                         padding: EdgeInsets.all(20),
