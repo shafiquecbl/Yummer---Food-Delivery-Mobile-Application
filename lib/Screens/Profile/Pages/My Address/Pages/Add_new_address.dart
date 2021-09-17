@@ -1,6 +1,8 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
+import 'package:secure_hops/API/Api_Services/Api_Manager.dart';
 import 'package:secure_hops/Widgets/AppBar.dart';
 import 'package:secure_hops/Widgets/button.dart';
 import 'package:secure_hops/constants.dart';
@@ -26,31 +28,7 @@ class _AddNewAddressState extends State<AddNewAddress> {
       TextEditingController();
   int? radioValue = 0;
 
-  add_address() async {
-    var address = {
-      'userName': "abcd",
-      'userPass': "123",
-      'fullName': _nameTextEditingController,
-      'mobileNo': _mobileTextEditingController,
-      'countryCode': "1",
-      'stateCode': _stateTextEditingController,
-      'cityCode': _cityTextEditingController,
-      'areaCode': 1,
-      'zipCode': _zipTextEditingController,
-      'addressText': _addressTextEditingController,
-      'locationLat': "00",
-      'locationLong': "00",
-      'doUpdate': false,
-      'addressCode': 1
-    };
-    var client = http.Client();
-    http.Response uriResponse = await client.post(
-        Uri.parse('https://www.ohready1.com/api/CustomersApi/signup'),
-        body: address);
-
-    var result = json.decode(uriResponse.body);
-    print(result);
-  }
+  // ignore: non_constant_identifier_names
 
   FocusNode focusNode1 = FocusNode();
 
@@ -108,19 +86,21 @@ class _AddNewAddressState extends State<AddNewAddress> {
                     controller: _mobileTextEditingController,
                     validator: (value) {}),
                 TextFormField(
+                    keyboardType: TextInputType.number,
                     decoration: InputDecoration(
-                      hintText: "Enter state",
+                      hintText: "Enter state code",
                       hintStyle: TextStyle(color: Colors.grey),
-                      labelText: "State",
+                      labelText: "State Code",
                     ),
                     controller: _stateTextEditingController,
                     validator: (value) {}),
                 TextFormField(
                     decoration: InputDecoration(
-                      hintText: "Enter city",
+                      hintText: "Enter city Code",
                       hintStyle: TextStyle(color: Colors.grey),
-                      labelText: "City",
+                      labelText: "City Code",
                     ),
+                    keyboardType: TextInputType.number,
                     controller: _cityTextEditingController,
                     validator: (value) {}),
                 TextFormField(
@@ -157,7 +137,28 @@ class _AddNewAddressState extends State<AddNewAddress> {
                 ),
                 box(),
                 box(),
-                MyButton(text: 'SAVE', onPressed: () {})
+                MyButton(
+                    text: 'SAVE',
+                    onPressed: () {
+                      APIService().addAddress(context,
+                          address: _addressTextEditingController.text,
+                          adrscode: "1",
+                          area: "1",
+                          city: _cityTextEditingController.text,
+                          country: "1",
+                          fullname: _nameTextEditingController.text,
+                          lat: "0",
+                          long: "0",
+                          mobilenum: _mobileTextEditingController.text,
+                          state: _stateTextEditingController.text,
+                          update: "false",
+                          username: "hamz",
+                          userpass: "1234",
+                          zip: _zipTextEditingController.text);
+
+                      APIService().showadrs(context,
+                          username: "hamz", userpass: "1234");
+                    })
               ],
             ),
           )

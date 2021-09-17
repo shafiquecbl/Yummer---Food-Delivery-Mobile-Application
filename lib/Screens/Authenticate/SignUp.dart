@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:secure_hops/API/Api_Services/Api_Manager.dart';
+import 'package:secure_hops/model/signUpModel.dart';
 
 import 'package:secure_hops/Screens/PhoneVerification/PhoneVerificationScreen.dart';
 import 'package:secure_hops/Widgets/button.dart';
@@ -203,7 +205,20 @@ class _SignUpState extends State<SignUp> {
                               text: "Signup",
                               onPressed: () async {
                                 if (_formKey.currentState!.validate()) {
-                                  regiter(accountType: 'email');
+                                  showLoadingDialog(context);
+                                  APIService().sign_up(context,
+                                      useremail:
+                                          _emailTextEditingController.text,
+                                      username: _nameTextEditingController.text,
+                                      userpass:
+                                          _passwordTextEditingController.text,
+                                      firstname: "",
+                                      lastname: "",
+                                      accounttype: "email",
+                                      from: "Mobile",
+                                      mobileno: "",
+                                      facebookid: "",
+                                      googleid: "");
                                 }
                               }),
                           Padding(

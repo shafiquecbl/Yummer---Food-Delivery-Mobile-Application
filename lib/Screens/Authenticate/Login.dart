@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:http/http.dart' as http;
 import 'package:secure_hops/API/Api_Services/Api_Manager.dart';
-import 'package:secure_hops/API/Api_Services/loginModel.dart';
+import 'package:secure_hops/model/loginModel.dart';
 import 'package:secure_hops/Widgets/button.dart';
 import 'package:secure_hops/Widgets/loading.dart';
 import 'package:secure_hops/Widgets/navigator.dart';
@@ -98,13 +98,9 @@ class _AuthenticScreenState extends State<AuthenticScreen> {
                               controller: _emailTextEditingController,
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
-                                  return 'Please enter email';
+                                  return 'Please enter email or user name';
                                 }
-                                if (!RegExp(
-                                        r"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")
-                                    .hasMatch(value)) {
-                                  return 'Please enter a valid email Address';
-                                }
+
                                 return null;
                               },
                               decoration: const InputDecoration(
@@ -159,10 +155,15 @@ class _AuthenticScreenState extends State<AuthenticScreen> {
                             MyButton(
                                 text: "Signin",
                                 onPressed: () async {
-                                  navigatorPush(context, false, MyHomePage());
-                                  // if (_formKey.currentState!.validate()) {
-                                  //   _login();
-                                  // }
+                                  // navigatorPush(context, false, MyHomePage());
+                                  if (_formKey.currentState!.validate()) {
+                                    showLoadingDialog(context);
+                                    APIService().login(context,
+                                        username:
+                                            _emailTextEditingController.text,
+                                        userpass: _passwordTextEditingController
+                                            .text);
+                                  }
                                 }),
                             Padding(
                               padding: const EdgeInsets.all(10.0),
