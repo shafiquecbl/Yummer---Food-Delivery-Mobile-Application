@@ -217,8 +217,8 @@ class _SignUpState extends State<SignUp> {
                                       accounttype: "email",
                                       from: "Mobile",
                                       mobileno: "",
-                                      facebookid: "",
-                                      googleid: "");
+                                      facebookid: "1",
+                                      googleid: "1");
                                 }
                               }),
                           Padding(

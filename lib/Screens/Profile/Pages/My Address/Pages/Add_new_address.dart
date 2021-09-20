@@ -7,6 +7,8 @@ import 'package:secure_hops/Widgets/AppBar.dart';
 import 'package:secure_hops/Widgets/button.dart';
 import 'package:secure_hops/constants.dart';
 import 'package:http/http.dart' as http;
+import 'package:secure_hops/model/loginResponseModel.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AddNewAddress extends StatefulWidget {
   @override
@@ -28,6 +30,9 @@ class _AddNewAddressState extends State<AddNewAddress> {
       TextEditingController();
   int? radioValue = 0;
 
+  String? usernName;
+  String? password;
+
   // ignore: non_constant_identifier_names
 
   FocusNode focusNode1 = FocusNode();
@@ -48,6 +53,14 @@ class _AddNewAddressState extends State<AddNewAddress> {
     return focusNode1.addListener(() {
       setState(() {});
     });
+  }
+
+  @override
+  void initState() {
+    getuser().then((value) {
+      usernName = value.email;
+    });
+    super.initState();
   }
 
   @override
@@ -139,7 +152,11 @@ class _AddNewAddressState extends State<AddNewAddress> {
                 box(),
                 MyButton(
                     text: 'SAVE',
-                    onPressed: () {
+                    onPressed: () async {
+                      SharedPreferences preferences =
+                          await SharedPreferences.getInstance();
+                      password = preferences.getString('pass');
+
                       APIService().addAddress(context,
                           address: _addressTextEditingController.text,
                           adrscode: "1",
@@ -152,12 +169,12 @@ class _AddNewAddressState extends State<AddNewAddress> {
                           mobilenum: _mobileTextEditingController.text,
                           state: _stateTextEditingController.text,
                           update: "false",
-                          username: "hamz",
-                          userpass: "1234",
+                          username: usernName,
+                          userpass: password,
                           zip: _zipTextEditingController.text);
 
                       APIService().showadrs(context,
-                          username: "hamz", userpass: "1234");
+                          username: usernName, userpass: password);
                     })
               ],
             ),
@@ -177,5 +194,12 @@ class _AddNewAddressState extends State<AddNewAddress> {
     return SizedBox(
       height: 25,
     );
+  }
+
+  Future<LoginResponseModel> getuser() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String res = pref.getString('Login').toString();
+    var jsonMap = json.decode(res);
+    return LoginResponseModel.fromJson(jsonMap);
   }
 }

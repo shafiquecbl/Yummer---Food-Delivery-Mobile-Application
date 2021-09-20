@@ -1,30 +1,37 @@
 import 'dart:convert';
-
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:secure_hops/Screens/Profile/components/changepass.dart';
+import 'package:secure_hops/API/Api_Services/Api_Manager.dart';
 import 'package:secure_hops/Widgets/AppBar.dart';
 import 'package:secure_hops/Widgets/button.dart';
-import 'package:secure_hops/Widgets/navigator.dart';
-import 'package:secure_hops/constants.dart';
 import 'package:secure_hops/model/loginResponseModel.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class ProfileEditPage extends StatefulWidget {
+import '../../../constants.dart';
+
+class ChangePass extends StatefulWidget {
   @override
-  _ProfileEditPageState createState() => _ProfileEditPageState();
+  _ChangePassState createState() => _ChangePassState();
 }
 
-class _ProfileEditPageState extends State<ProfileEditPage> {
-  String? email;
-
+class _ChangePassState extends State<ChangePass> {
   InputBorder? focusedBorder = UnderlineInputBorder(
     borderSide: BorderSide(color: kPrimaryColor),
   );
 
+  final TextEditingController _oldpassTextEditingController =
+      TextEditingController();
+  final TextEditingController _newpassTextEditingController =
+      TextEditingController();
+  final TextEditingController _cpassTextEditingController =
+      TextEditingController();
+
+  var usercode;
+
   @override
   void initState() {
     getuser().then((value) {
-      email = value.email;
+      usercode = value.userCode.toString();
     });
     super.initState();
   }
@@ -33,7 +40,7 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: kBackgroundColor,
-      appBar: appBar(context, title: 'Edit Profile'),
+      appBar: appBar(context, title: 'Change Password'),
       body: ListView(
         children: [
           Padding(
@@ -58,75 +65,50 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
                               fit: BoxFit.cover,
                             ),
                           )),
-                      Positioned(
-                          bottom: 0,
-                          right: 0,
-                          child: GestureDetector(
-                            child: Container(
-                              height: 40,
-                              width: 40,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                border:
-                                    Border.all(width: 4, color: Colors.white),
-                              ),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: Color(0xFF7D849A),
-                                ),
-                                child: Icon(
-                                  Icons.edit,
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ),
-                            onTap: () {},
-                          )),
                     ],
                   ),
                 ),
                 box(),
-                Text(
-                  email.toString(),
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                ),
                 TextFormField(
                     decoration: InputDecoration(
                       focusedBorder: focusedBorder,
-                      hintText: "Enter First Name",
+                      hintText: "Enter old password",
                       hintStyle: TextStyle(color: Colors.grey),
-                      labelText: "FIRST NAME",
+                      labelText: "Old Password",
                     ),
+                    controller: _oldpassTextEditingController,
                     validator: (value) {}),
                 box(),
                 TextFormField(
                     decoration: InputDecoration(
                       focusedBorder: focusedBorder,
-                      hintText: "Enter Last Name",
+                      hintText: "Enter new password",
                       hintStyle: TextStyle(color: Colors.grey),
-                      labelText: "LAST NAME",
+                      labelText: "New PassWord",
                     ),
+                    controller: _newpassTextEditingController,
                     validator: (value) {}),
                 box(),
                 TextFormField(
                     decoration: InputDecoration(
                       focusedBorder: focusedBorder,
-                      hintText: "Enter phone #",
+                      hintText: "Enter confirm password",
                       hintStyle: TextStyle(color: Colors.grey),
-                      labelText: "PHONE NUMBER",
+                      labelText: "Confirm PassWord",
                     ),
+                    controller: _cpassTextEditingController,
                     validator: (value) {}),
                 box(),
-                box(),
-                MyButton(text: 'SAVE CHANGES', onPressed: () {}),
                 box(),
                 box(),
                 MyButton(
-                    text: 'CHANGE PASSWORD',
+                    text: 'SAVE PASSWORD',
                     onPressed: () {
-                      navigatorPush(context, false, ChangePass());
-                    }),
+                      APIService().changepass(context,
+                          newpass: _newpassTextEditingController.text,
+                          oldpass: _oldpassTextEditingController.text,
+                          usercode: usercode);
+                    })
               ],
             ),
           )
