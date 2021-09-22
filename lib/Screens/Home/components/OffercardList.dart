@@ -8,7 +8,7 @@ class Offercardlist extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 199,
+      height: 180,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         padding: EdgeInsets.only(left: 16, right: 6),

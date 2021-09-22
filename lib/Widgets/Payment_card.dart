@@ -9,10 +9,11 @@ class PaymentCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
     return Container(
       margin: EdgeInsets.only(right: 10),
       height: 199,
-      width: 344,
+      width: size.width / 1.2,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(28),
         color: index == 99

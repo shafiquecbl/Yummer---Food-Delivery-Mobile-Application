@@ -1,7 +1,12 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:secure_hops/API/Api_Services/Api_Manager.dart';
 import 'package:secure_hops/Widgets/AppBar.dart';
 import 'package:secure_hops/Widgets/button.dart';
 import 'package:secure_hops/constants.dart';
+import 'package:secure_hops/model/loginResponseModel.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AddNewAddress extends StatefulWidget {
   @override
@@ -9,9 +14,24 @@ class AddNewAddress extends StatefulWidget {
 }
 
 class _AddNewAddressState extends State<AddNewAddress> {
-  String name = 'Kristin Watson';
-  String email = 'kristinwatson@gmail.com';
+  final TextEditingController _nameTextEditingController =
+      TextEditingController();
+  final TextEditingController _mobileTextEditingController =
+      TextEditingController();
+  final TextEditingController _stateTextEditingController =
+      TextEditingController();
+  final TextEditingController _cityTextEditingController =
+      TextEditingController();
+  final TextEditingController _zipTextEditingController =
+      TextEditingController();
+  final TextEditingController _addressTextEditingController =
+      TextEditingController();
   int? radioValue = 0;
+
+  String? usernName;
+  String? password;
+
+  // ignore: non_constant_identifier_names
 
   FocusNode focusNode1 = FocusNode();
 
@@ -34,6 +54,14 @@ class _AddNewAddressState extends State<AddNewAddress> {
   }
 
   @override
+  void initState() {
+    getuser().then((value) {
+      usernName = value.email;
+    });
+    super.initState();
+  }
+
+  @override
   void dispose() {
     super.dispose();
     focusNode1.dispose();
@@ -53,23 +81,55 @@ class _AddNewAddressState extends State<AddNewAddress> {
                 box(),
                 TextFormField(
                     focusNode: focusNode1,
-                    initialValue: name,
+                    controller: _nameTextEditingController,
                     decoration: InputDecoration(
-                      hintText: "Enter title",
+                      hintText: "Enter full name",
                       hintStyle: TextStyle(color: Colors.grey),
-                      labelText: "TITLE",
+                      labelText: "Full Name",
                     ),
                     validator: (value) {}),
-                box(),
                 TextFormField(
-                    initialValue: email,
+                    decoration: InputDecoration(
+                      hintText: "Enter mobile number",
+                      hintStyle: TextStyle(color: Colors.grey),
+                      labelText: "Mobile",
+                    ),
+                    controller: _mobileTextEditingController,
+                    validator: (value) {}),
+                TextFormField(
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                      hintText: "Enter state code",
+                      hintStyle: TextStyle(color: Colors.grey),
+                      labelText: "State Code",
+                    ),
+                    controller: _stateTextEditingController,
+                    validator: (value) {}),
+                TextFormField(
+                    decoration: InputDecoration(
+                      hintText: "Enter city Code",
+                      hintStyle: TextStyle(color: Colors.grey),
+                      labelText: "City Code",
+                    ),
+                    keyboardType: TextInputType.number,
+                    controller: _cityTextEditingController,
+                    validator: (value) {}),
+                TextFormField(
+                    decoration: InputDecoration(
+                      hintText: "Enter zip-code",
+                      hintStyle: TextStyle(color: Colors.grey),
+                      labelText: "Zip-Code",
+                    ),
+                    controller: _zipTextEditingController,
+                    validator: (value) {}),
+                TextFormField(
                     decoration: InputDecoration(
                       hintText: "Enter address",
                       hintStyle: TextStyle(color: Colors.grey),
-                      labelText: "NEW ADDRESS",
+                      labelText: "New Address",
                     ),
+                    controller: _addressTextEditingController,
                     validator: (value) {}),
-                box(),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
@@ -88,7 +148,32 @@ class _AddNewAddressState extends State<AddNewAddress> {
                 ),
                 box(),
                 box(),
-                MyButton(text: 'SAVE', onPressed: () {})
+                MyButton(
+                    text: 'SAVE',
+                    onPressed: () async {
+                      SharedPreferences preferences =
+                          await SharedPreferences.getInstance();
+                      password = preferences.getString('pass');
+
+                      APIService().addAddress(context,
+                          address: _addressTextEditingController.text,
+                          adrscode: "1",
+                          area: "1",
+                          city: _cityTextEditingController.text,
+                          country: "1",
+                          fullname: _nameTextEditingController.text,
+                          lat: "0",
+                          long: "0",
+                          mobilenum: _mobileTextEditingController.text,
+                          state: _stateTextEditingController.text,
+                          update: "false",
+                          username: usernName,
+                          userpass: password,
+                          zip: _zipTextEditingController.text);
+
+                      APIService().showadrs(context,
+                          username: usernName, userpass: password);
+                    })
               ],
             ),
           )
@@ -107,5 +192,12 @@ class _AddNewAddressState extends State<AddNewAddress> {
     return SizedBox(
       height: 25,
     );
+  }
+
+  Future<LoginResponseModel> getuser() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String res = pref.getString('Login').toString();
+    var jsonMap = json.decode(res);
+    return LoginResponseModel.fromJson(jsonMap);
   }
 }

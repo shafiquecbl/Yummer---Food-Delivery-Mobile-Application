@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:secure_hops/Screens/Authenticate/AuthenticScreen.dart';
+import 'package:secure_hops/Screens/Authenticate/Login.dart';
 import 'package:secure_hops/Widgets/button.dart';
 import '../../constants.dart';
 import 'Content_OnBoarding.dart';
@@ -28,6 +28,7 @@ class _OnbordingState extends State<Onbording> {
 
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
     return SafeArea(
       child: Scaffold(
         backgroundColor: kBackgroundColor,
@@ -70,7 +71,7 @@ class _OnbordingState extends State<Onbording> {
                         ),
                         Image.asset(
                           contents[i].image,
-                          height: 250,
+                          height: size.height / 3.3,
                           width: 250,
                         ),
                         SizedBox(
@@ -127,69 +128,6 @@ class _OnbordingState extends State<Onbording> {
                     );
                   }),
             ),
-            // GestureDetector(
-            //   onTap: () {
-            //     if (currentIndex == contents.length - 1) {
-            //       Navigator.push(
-            //         context,
-            //         MaterialPageRoute(
-            //           builder: (_) => AuthenticScreen(),
-            //         ),
-            //       );
-            //     }
-            //     _controller.nextPage(
-            //       duration: Duration(milliseconds: 100),
-            //       curve: Curves.bounceIn,
-            //     );
-            //   },
-            //   child: Stack(
-            //     children: [
-            //       Container(
-            //         height: 60,
-            //         margin: EdgeInsets.all(40),
-            //         width: double.infinity,
-            //         child: Image.asset(btn),
-            //       ),
-            //       Padding(
-            //         padding: const EdgeInsets.only(top: 60.0, left: 160),
-            //         child: Text(
-            //           currentIndex == contents.length - 1 ? "Continue" : "Next",
-            //           style: TextStyle(fontSize: 14, color: btntextColor),
-            //         ),
-            //       )
-            //     ],
-            //   ),
-            // )
-            // Stack(
-            //   children:[ Container(
-            //     height: 60,
-            //     margin: EdgeInsets.all(40),
-            //     width: double.infinity,
-            //     child: FlatButton(
-            //       child: Text(
-            //           currentIndex == contents.length - 1 ? "Continue" : "Next"),
-            //       onPressed: () {
-            //         if (currentIndex == contents.length - 1) {
-            //           Navigator.pushReplacement(
-            //             context,
-            //             MaterialPageRoute(
-            //               builder: (_) => AuthenticScreen(),
-            //             ),
-            //           );
-            //         }
-            //         _controller.nextPage(
-            //           duration: Duration(milliseconds: 100),
-            //           curve: Curves.bounceIn,
-            //         );
-            //       },
-            //       color: Colors.redAccent,
-            //       textColor: Colors.white,
-            //       shape: RoundedRectangleBorder(
-            //         borderRadius: BorderRadius.circular(20),
-            //       ),
-            //     ),
-            //   ),
-            // ])
           ],
         ),
       ),

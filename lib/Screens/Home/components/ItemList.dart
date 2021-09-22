@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'package:secure_hops/Screens/Home/ProductDetailScreens/ProductDetailScreen.dart';
+import 'package:secure_hops/Widgets/navigator.dart';
+
 import '../../../constants.dart';
 
 class ItemList extends StatelessWidget {
@@ -20,6 +23,9 @@ class ItemList extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               child: InkWell(
+                onTap: () {
+                  navigatorPush(context, true, ProductDetails());
+                },
                 child: Container(
                   child: Row(
                     children: [

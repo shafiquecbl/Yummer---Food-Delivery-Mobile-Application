@@ -19,9 +19,7 @@ class Home extends StatelessWidget {
                     image: AssetImage('assets/img.png'), fit: BoxFit.cover),
               ),
             ),
-            Padding(
-                padding: const EdgeInsets.only(left: 20.0, top: 80),
-                child: DeliverCard()),
+            DeliverCard(),
           ],
         ));
   }

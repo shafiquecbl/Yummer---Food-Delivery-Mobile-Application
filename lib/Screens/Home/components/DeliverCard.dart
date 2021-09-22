@@ -1,4 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:secure_hops/Screens/Home/AllOffers.dart';
+import 'package:secure_hops/Widgets/navigator.dart';
 import 'package:secure_hops/constants.dart';
 
 import 'Categories.dart';
@@ -6,22 +9,29 @@ import 'ItemList.dart';
 import 'OffercardList.dart';
 
 class DeliverCard extends StatelessWidget {
+  final User? user = FirebaseAuth.instance.currentUser;
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Column(
       children: [
+        SizedBox(
+          height: size.height / 8,
+        ),
         Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            CircleAvatar(
-              backgroundImage: NetworkImage(
-                demoAvatar,
+            Padding(
+              padding: const EdgeInsets.only(left: 15.0),
+              child: CircleAvatar(
+                backgroundImage: NetworkImage(demoAvatar
+                    // user!.photoURL.toString(),
+                    ),
+                radius: 30,
               ),
-              radius: 30,
             ),
             Container(
-              height: 80,
+              height: size.height / 9.5,
               width: size.width / 1.3,
               child: Padding(
                 padding: const EdgeInsets.only(left: 15),
@@ -60,8 +70,27 @@ class DeliverCard extends StatelessWidget {
             ),
           ],
         ),
-        SizedBox(
-          height: 100,
+        Categories(),
+        Row(
+          children: [
+            Text(
+              "HOT OFFERS",
+              style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+            ),
+            Spacer(),
+            Padding(
+              padding: const EdgeInsets.only(right: 8.0),
+              child: GestureDetector(
+                onTap: () {
+                  navigatorPush(context, false, AllOffers());
+                },
+                child: Text(
+                  "All >",
+                  style: TextStyle(color: primaryColor),
+                ),
+              ),
+            )
+          ],
         ),
         Offercardlist(),
         Text(
