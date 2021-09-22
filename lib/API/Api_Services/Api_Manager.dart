@@ -4,14 +4,13 @@ import 'package:secure_hops/model/addressResponseModel.dart';
 import 'package:secure_hops/model/adress_model.dart';
 import 'package:secure_hops/model/changepasswordModel.dart';
 import 'package:secure_hops/model/getCustomerProfileModel.dart';
-import 'package:secure_hops/model/getProfileModel.dart';
+
 import 'dart:convert';
 
 import 'package:secure_hops/model/loginModel.dart';
 import 'package:secure_hops/model/saveProfileModel.dart';
 import 'package:secure_hops/model/showaddress_model.dart';
 import 'package:secure_hops/model/signUpModel.dart';
-import 'package:secure_hops/Screens/PhoneVerification/PhoneVerificationScreen.dart';
 import 'package:secure_hops/Widgets/navigator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
