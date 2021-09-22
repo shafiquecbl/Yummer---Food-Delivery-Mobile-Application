@@ -1,13 +1,10 @@
 import 'dart:convert';
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:secure_hops/API/Api_Services/Api_Manager.dart';
-import 'package:secure_hops/Screens/Authenticate/Login.dart';
 import 'package:secure_hops/Screens/Onboarding/OnBoarding.dart';
 import 'package:secure_hops/Screens/Profile/Pages/My%20Address/My_Address.dart';
-import 'package:secure_hops/Screens/Profile/Pages/My%20Promocodes/My_Promocodes.dart';
 import 'package:secure_hops/Screens/Profile/components/profile_crad.dart';
 import 'package:secure_hops/Widgets/navigator.dart';
 import 'package:secure_hops/constants.dart';
@@ -106,14 +103,13 @@ class _ProfileState extends State<Profile> {
                         TileButton(
                           icon: FaIcon(FontAwesomeIcons.gift),
                           onPressed: () async {
-                            SharedPreferences preferences =
-                                await SharedPreferences.getInstance()
-                                    .then((value) {
+                            await SharedPreferences.getInstance().then((value) {
                               password = value.getString('pass');
+                              APIService().showadrs(context,
+                                  username: usernName, userpass: password);
                               return value;
                             });
-                            APIService().showadrs(context,
-                                username: usernName, userpass: password);
+
                             //navigatorPush(context, true, MyPromocodes());
                           },
                           text: 'My Promocodes',

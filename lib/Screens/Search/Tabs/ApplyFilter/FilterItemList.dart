@@ -9,9 +9,6 @@ class FilterItemList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final TextStyle style = TextStyle(
-      color: Colors.black54,
-    );
     return GridView.count(
         childAspectRatio: 0.8,
         padding: EdgeInsets.symmetric(

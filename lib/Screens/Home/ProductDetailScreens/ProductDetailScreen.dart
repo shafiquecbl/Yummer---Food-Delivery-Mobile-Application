@@ -33,7 +33,6 @@ class _ProductDetailsState extends State<ProductDetails> {
 
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
     return SafeArea(
       child: Scaffold(
         bottomNavigationBar: Padding(

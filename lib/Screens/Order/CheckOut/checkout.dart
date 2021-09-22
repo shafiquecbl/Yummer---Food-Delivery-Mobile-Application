@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:secure_hops/Screens/Profile/Pages/My%20Address/Pages/Add_new_address.dart';
 import 'package:secure_hops/Screens/Profile/components/divider.dart';
 import 'package:secure_hops/Widgets/AppBar.dart';
 import 'package:secure_hops/Widgets/button.dart';
 import 'package:secure_hops/Widgets/navigator.dart';
 import 'package:secure_hops/constants.dart';
-
 import '../../../Images.dart';
 import '../DoneOrder.dart';
-import 'CheckoutBottomSheet.dart';
 
 class Checkout extends StatefulWidget {
   @override

@@ -1,14 +1,13 @@
 import 'dart:convert';
-
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:secure_hops/Screens/Authenticate/Login.dart';
 import 'package:secure_hops/Screens/Onboarding/OnBoarding.dart';
 import 'package:secure_hops/constants.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:secure_hops/home.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'model/loginResponseModel.dart';
 
@@ -29,6 +28,12 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: primaryColor,
         ),
+        supportedLocales: [Locale('en', 'US'), Locale('es', 'ES')],
+        localizationsDelegates: [
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
         home: FutureBuilder(
           future: getuser(),
           builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -46,10 +51,13 @@ class MyApp extends StatelessWidget {
     );
   }
 
-  Future<LoginResponseModel> getuser() async {
+  getuser() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String res = pref.getString('Login').toString();
     var jsonMap = json.decode(res);
-    return LoginResponseModel.fromJson(jsonMap);
+    if (jsonMap != null) {
+      return LoginResponseModel.fromJson(jsonMap);
+    }
+    return null;
   }
 }

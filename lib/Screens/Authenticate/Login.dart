@@ -1,17 +1,13 @@
 import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:http/http.dart' as http;
 import 'package:secure_hops/API/Api_Services/Api_Manager.dart';
-import 'package:secure_hops/model/loginModel.dart';
 import 'package:secure_hops/Widgets/button.dart';
 import 'package:secure_hops/Widgets/loading.dart';
 import 'package:secure_hops/Widgets/navigator.dart';
-import 'package:secure_hops/Widgets/progresshub.dart';
 import 'package:secure_hops/home.dart';
-import '../../Images.dart';
 import '../../constants.dart';
 import 'ForgotPassword.dart';
 import 'SignUp.dart';

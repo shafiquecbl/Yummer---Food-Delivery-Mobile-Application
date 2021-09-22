@@ -1,5 +1,3 @@
-import '../../../Images.dart';
-
 class ProductContent {
   String image;
   String title;

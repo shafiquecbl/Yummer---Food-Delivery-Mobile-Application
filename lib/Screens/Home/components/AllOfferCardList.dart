@@ -1,9 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:secure_hops/Screens/Home/components/OffercardList.dart';
-
 import '../../../constants.dart';
-import 'offerlist.dart';
 
 class AllOfferCardList extends StatelessWidget {
   final int? index;

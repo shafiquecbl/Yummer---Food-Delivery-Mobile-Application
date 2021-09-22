@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-
 import '../../../Images.dart';
-import '../../../constants.dart';
 
 void checkoutModalBottomSheet(context) {
   showModalBottomSheet(

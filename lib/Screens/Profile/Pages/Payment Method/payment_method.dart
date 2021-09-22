@@ -14,7 +14,6 @@ class PaymentMethod extends StatefulWidget {
 class _PaymentMethodState extends State<PaymentMethod> {
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: kBackgroundColor,
       appBar: appBar(context, title: 'Payment Method'),

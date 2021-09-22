@@ -1,12 +1,10 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
 import 'package:secure_hops/API/Api_Services/Api_Manager.dart';
 import 'package:secure_hops/Widgets/AppBar.dart';
 import 'package:secure_hops/Widgets/button.dart';
 import 'package:secure_hops/constants.dart';
-import 'package:http/http.dart' as http;
 import 'package:secure_hops/model/loginResponseModel.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

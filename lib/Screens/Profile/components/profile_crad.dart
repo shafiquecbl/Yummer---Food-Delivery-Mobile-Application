@@ -7,7 +7,6 @@ import 'package:secure_hops/API/Api_Services/Api_Manager.dart';
 import 'package:secure_hops/Screens/Profile/Pages/Edit%20Profile/Profile_Edit_Page.dart';
 import 'package:secure_hops/Widgets/navigator.dart';
 import 'package:secure_hops/constants.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:secure_hops/model/loginResponseModel.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

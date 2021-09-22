@@ -22,12 +22,7 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
   String? email;
   String? pass;
   String? dropdownValue;
-  double? _height;
   double? _width;
-
-  String? _setTime, _setDate;
-
-  String? _hour, _minute, _time;
 
   File? file;
   String? setDate;
@@ -321,6 +316,7 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
   capturephotowithcamera() async {
     Navigator.pop(context);
     PickedFile? imagefile =
+        // ignore: invalid_use_of_visible_for_testing_member
         await ImagePicker.platform.pickImage(source: ImageSource.camera);
     setState(() {
       file = File(imagefile!.path);
@@ -330,6 +326,7 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
   selectfromgallery() async {
     Navigator.pop(context);
     PickedFile? imagefile =
+        // ignore: invalid_use_of_visible_for_testing_member
         await ImagePicker.platform.pickImage(source: ImageSource.gallery);
     setState(() {
       file = File(imagefile!.path);

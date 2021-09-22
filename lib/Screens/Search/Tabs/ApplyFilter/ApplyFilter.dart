@@ -1,10 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:secure_hops/Screens/Home/components/ItemList.dart';
-import 'package:secure_hops/Screens/Search/Filter.dart';
 import 'package:secure_hops/Screens/Search/Tabs/ApplyFilter/CafeInfo.dart';
 import 'package:secure_hops/Widgets/button.dart';
-import 'package:secure_hops/Widgets/navigator.dart';
 
 import '../../../../constants.dart';
 import 'FilterItemList.dart';

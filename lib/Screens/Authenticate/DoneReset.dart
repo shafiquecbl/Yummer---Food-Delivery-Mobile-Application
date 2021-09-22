@@ -2,8 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:secure_hops/Widgets/button.dart';
 import 'package:secure_hops/Widgets/navigator.dart';
-
-import '../../Images.dart';
 import '../../constants.dart';
 import 'Login.dart';
 

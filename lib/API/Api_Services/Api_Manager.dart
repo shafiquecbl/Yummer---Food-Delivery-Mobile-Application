@@ -4,9 +4,7 @@ import 'package:secure_hops/model/addressResponseModel.dart';
 import 'package:secure_hops/model/adress_model.dart';
 import 'package:secure_hops/model/changepasswordModel.dart';
 import 'package:secure_hops/model/getCustomerProfileModel.dart';
-
 import 'dart:convert';
-
 import 'package:secure_hops/model/loginModel.dart';
 import 'package:secure_hops/model/saveProfileModel.dart';
 import 'package:secure_hops/model/showaddress_model.dart';
@@ -22,7 +20,7 @@ class APIService {
 
 ////////////////////////SIGNUP/////////////////////////
 
-  Future<SignUpModel> sign_up(BuildContext context,
+  Future<SignUpModel> signup(BuildContext context,
       {useremail,
       username,
       userpass,

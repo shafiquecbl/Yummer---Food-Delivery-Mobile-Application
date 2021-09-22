@@ -1,5 +1,3 @@
-import 'package:secure_hops/Screens/Authenticate/SignUp.dart';
-
 class SignUpModel {
   String? useremail;
   String? username;

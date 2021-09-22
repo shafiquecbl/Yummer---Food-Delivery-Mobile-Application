@@ -1,18 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:http/http.dart';
 import 'package:secure_hops/API/Api_Services/Api_Manager.dart';
 import 'package:secure_hops/Screens/Profile/Pages/My%20Address/Pages/Add_new_address.dart';
 import 'package:secure_hops/Screens/Profile/components/divider.dart';
 import 'package:secure_hops/Widgets/AppBar.dart';
 import 'package:secure_hops/Widgets/button.dart';
 import 'package:secure_hops/Widgets/navigator.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
-
 import 'package:secure_hops/model/addressResponseModel.dart';
-import 'package:secure_hops/model/loginResponseModel.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class MyAddress extends StatelessWidget {
   @override

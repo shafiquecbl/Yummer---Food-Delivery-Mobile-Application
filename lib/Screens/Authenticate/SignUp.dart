@@ -1,21 +1,13 @@
 import 'dart:convert';
-import 'dart:math';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:secure_hops/API/Api_Services/Api_Manager.dart';
-import 'package:secure_hops/model/signUpModel.dart';
-
 import 'package:secure_hops/Screens/PhoneVerification/PhoneVerificationScreen.dart';
 import 'package:secure_hops/Widgets/button.dart';
 import 'package:secure_hops/Widgets/loading.dart';
 import 'package:secure_hops/Widgets/navigator.dart';
 import 'package:secure_hops/home.dart';
-import '../../Images.dart';
 import '../../constants.dart';
 import 'Login.dart';
 import 'facebook_login.dart';
@@ -206,7 +198,7 @@ class _SignUpState extends State<SignUp> {
                               onPressed: () async {
                                 if (_formKey.currentState!.validate()) {
                                   showLoadingDialog(context);
-                                  APIService().sign_up(context,
+                                  APIService().signup(context,
                                       useremail:
                                           _emailTextEditingController.text,
                                       username: _nameTextEditingController.text,

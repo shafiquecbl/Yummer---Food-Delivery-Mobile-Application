@@ -1,9 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:secure_hops/Widgets/AppBar.dart';
-
 import 'components/AllOfferCardList.dart';
-import 'components/offerlist.dart';
 
 class AllOffers extends StatefulWidget {
   AllOffers({Key? key}) : super(key: key);
@@ -15,7 +13,6 @@ class AllOffers extends StatefulWidget {
 class _AllOffersState extends State<AllOffers> {
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: appBar(context, title: "All Offers"),
       body: Column(

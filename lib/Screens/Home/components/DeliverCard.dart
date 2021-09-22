@@ -9,7 +9,7 @@ import 'ItemList.dart';
 import 'OffercardList.dart';
 
 class DeliverCard extends StatelessWidget {
-  User? user = FirebaseAuth.instance.currentUser;
+  final User? user = FirebaseAuth.instance.currentUser;
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
