@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:secure_hops/Screens/Authenticate/Login.dart';
+import 'package:secure_hops/Screens/Onboarding/languagechanger.dart';
 import 'package:secure_hops/Widgets/button.dart';
 import '../../constants.dart';
 import 'Content_OnBoarding.dart';
@@ -57,7 +58,7 @@ class _OnbordingState extends State<Onbording> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (_) => AuthenticScreen(),
+                                  builder: (_) => ChangeLanguage(),
                                 ),
                               );
                             },

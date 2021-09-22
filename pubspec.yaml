@@ -10,27 +10,26 @@ environment:
   sdk: ">=2.12.0 <3.0.0"
 
 dependencies:
-  flutter:
-    sdk: flutter
   cupertino_icons: ^1.0.2
-  persistent_bottom_nav_bar: ^4.0.2
-  font_awesome_flutter: ^9.1.0
-  google_fonts:
-  intl_phone_field: ^2.0.1
-  http: ^0.13.3
-  flutter_facebook_auth: ^3.5.1
   firebase_auth: ^3.1.1
   firebase_core: ^1.6.0
-  provider: ^6.0.0
+  flutter:
+    sdk: flutter
+  flutter_facebook_auth: ^3.5.1
+  font_awesome_flutter: ^9.1.0
+  google_fonts: null
   google_sign_in: ^5.1.0
-  shared_preferences: ^2.0.7
-  intl: ^0.17.0
+  http: ^0.13.3
   image_picker: ^0.8.4+1
+  intl: ^0.17.0
+  intl_phone_field: ^2.0.1
+  persistent_bottom_nav_bar: ^4.0.2
+  provider: ^6.0.0
+  shared_preferences: ^2.0.7
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
 
 flutter:
   uses-material-design: true
@@ -38,8 +37,6 @@ flutter:
   assets:
     - assets/
   #   - images/a_dot_ham.jpeg
-
- 
   # fonts:
   #   - family: Schyler
   #     fonts:
@@ -51,4 +48,3 @@ flutter:
   #       - asset: fonts/TrajanPro.ttf
   #       - asset: fonts/TrajanPro_Bold.ttf
   #         weight: 700
-
