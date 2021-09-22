@@ -43,10 +43,13 @@ class MyApp extends StatelessWidget {
     );
   }
 
-  Future<LoginResponseModel> getuser() async {
+  getuser() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String res = pref.getString('Login').toString();
     var jsonMap = json.decode(res);
-    return LoginResponseModel.fromJson(jsonMap);
+    if (jsonMap != null) {
+      return LoginResponseModel.fromJson(jsonMap);
+    }
+    return null;
   }
 }
