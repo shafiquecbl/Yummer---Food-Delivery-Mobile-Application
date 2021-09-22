@@ -47,7 +47,6 @@ class APIService {
                 .toJson())
         .then((response) async {
       var result = json.decode(response.body);
-      print(result);
       SharedPreferences pref = await SharedPreferences.getInstance();
       pref.setString('Login', jsonEncode(result));
       pref.setString('pass', userpass);
@@ -217,8 +216,18 @@ class APIService {
       var result = json.decode(response.body);
 
       SharedPreferences pref = await SharedPreferences.getInstance();
-      pref.setString('Profile', jsonEncode(result));
-      print(result);
+      pref.setString(
+          'Profile',
+          jsonEncode(SaveProfileModel(
+                  dob: dob,
+                  email: email,
+                  firstName: firstName,
+                  gender: gender,
+                  img: img,
+                  lastname: lastname,
+                  mobileno: mobileno,
+                  pass: pass)
+              .toJson()));
       if (result['result'] == 'true') {
         ScaffoldMessenger.of(context)
             .showSnackBar(SnackBar(content: const Text('Changes Saved!')));

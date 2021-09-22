@@ -7,6 +7,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:secure_hops/home.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'Provider/user_provider.dart';
 import 'model/loginResponseModel.dart';
 
 void main() async {
@@ -20,24 +21,27 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return Provider(
       create: (BuildContext context) {},
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Yummer',
-        theme: ThemeData(
-          primarySwatch: primaryColor,
-        ),
-        home: FutureBuilder(
-          future: getuser(),
-          builder: (BuildContext context, AsyncSnapshot snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting)
-              return Container(
-                color: Colors.white,
-                child: Center(
-                  child: CircularProgressIndicator(),
-                ),
-              );
-            return snapshot.data != null ? MyHomePage() : Onbording();
-          },
+      child: ChangeNotifierProvider<LoginStorage>(
+        create: (context) => LoginStorage(),
+        child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: 'OhReady!',
+          theme: ThemeData(
+            primarySwatch: primaryColor,
+          ),
+          home: FutureBuilder(
+            future: getuser(),
+            builder: (BuildContext context, AsyncSnapshot snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting)
+                return Container(
+                  color: Colors.white,
+                  child: Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                );
+              return snapshot.data != null ? MyHomePage() : Onbording();
+            },
+          ),
         ),
       ),
     );

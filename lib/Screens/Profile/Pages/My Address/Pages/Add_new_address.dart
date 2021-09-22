@@ -170,9 +170,6 @@ class _AddNewAddressState extends State<AddNewAddress> {
                           username: usernName,
                           userpass: password,
                           zip: _zipTextEditingController.text);
-
-                      APIService().showadrs(context,
-                          username: usernName, userpass: password);
                     })
               ],
             ),

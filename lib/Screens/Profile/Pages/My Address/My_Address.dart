@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 import 'package:secure_hops/API/Api_Services/Api_Manager.dart';
+import 'package:secure_hops/Provider/user_provider.dart';
 import 'package:secure_hops/Screens/Profile/Pages/My%20Address/Pages/Add_new_address.dart';
 import 'package:secure_hops/Screens/Profile/components/divider.dart';
 import 'package:secure_hops/Widgets/AppBar.dart';
@@ -11,42 +13,51 @@ import 'package:secure_hops/model/addressResponseModel.dart';
 class MyAddress extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: appBar(context, title: 'My Address'),
-      body: FutureBuilder<List<AdressResponseModel>>(
-        future:
-            APIService().showadrs(context, username: "hamxa", userpass: "1234"),
-        builder: (BuildContext context,
-            AsyncSnapshot<List<AdressResponseModel>> snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting)
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          return showAddress(context, snapshot.data!);
-        },
-      ),
-    );
+    return Consumer<LoginStorage>(builder: (context, login, child) {
+      return Scaffold(
+        appBar: appBar(context, title: 'My Address'),
+        body: FutureBuilder<List<AdressResponseModel>>(
+          future: APIService().showadrs(context,
+              username: login.loginResponseModel!.userName,
+              userpass: login.password),
+          builder: (BuildContext context,
+              AsyncSnapshot<List<AdressResponseModel>> snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting)
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            return showAddress(context, snapshot.data!);
+          },
+        ),
+      );
+    });
   }
 
   showAddress(BuildContext context, List<AdressResponseModel> responseModel) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
-      child: Wrap(
-        direction: Axis.vertical,
+      child: Column(
         children: [
-          Container(
-            height: 500,
+          Expanded(
             child: ListView.builder(
                 itemCount: responseModel.length,
                 itemBuilder: (context, index) {
                   AdressResponseModel res = responseModel[index];
-                  return InkWell(
-                    onTap: () {},
-                    child: ListTile(
-                      leading: FaIcon(Icons.home_outlined),
-                      title: Text(res.addressText.toString()),
-                      subtitle:
-                          Text('8000 S Kirkland Ave, Chicago, IL 6065...'),
+                  return Dismissible(
+                    background: slideRightBackground(),
+                    secondaryBackground: slideLeftBackground(),
+                    key: Key(index.toString()),
+                    child: InkWell(
+                      onTap: () {},
+                      child: ListTile(
+                        leading: FaIcon(index == 0
+                            ? Icons.home_outlined
+                            : index == 1
+                                ? Icons.work_outline_outlined
+                                : Icons.location_pin),
+                        title: Text(res.fullName.toString()),
+                        subtitle: Text(res.addressText.toString()),
+                      ),
                     ),
                   );
                 }),
@@ -64,9 +75,64 @@ class MyAddress extends StatelessWidget {
       ),
     );
   }
-  // Future<LoginResponseModel> getuser() async {
-  //   SharedPreferences pref = await SharedPreferences.getInstance();
-  //   String res = pref.getString('Login').toString();
-  //   var jsonMap = json.decode(res);
-  //   return LoginResponseModel.fromJson(jsonMap);
+
+  Widget slideRightBackground() {
+    return Container(
+      color: Colors.green,
+      child: Align(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            SizedBox(
+              width: 20,
+            ),
+            Icon(
+              Icons.edit,
+              color: Colors.white,
+            ),
+            Text(
+              " Edit",
+              style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.w700,
+              ),
+              textAlign: TextAlign.left,
+            ),
+          ],
+        ),
+        alignment: Alignment.centerLeft,
+      ),
+    );
+  }
+
+  Widget slideLeftBackground() {
+    return Container(
+      color: Colors.red,
+      child: Align(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: <Widget>[
+            Icon(
+              Icons.delete,
+              color: Colors.white,
+            ),
+            Text(
+              " Delete",
+              style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.w700,
+              ),
+              textAlign: TextAlign.right,
+            ),
+            SizedBox(
+              width: 20,
+            ),
+          ],
+        ),
+        alignment: Alignment.centerRight,
+      ),
+    );
+  }
+
+  delete() {}
 }
