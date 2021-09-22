@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 import 'package:secure_hops/model/loginResponseModel.dart';
 import 'package:secure_hops/model/saveProfileModel.dart';
@@ -24,6 +23,15 @@ class LoginStorage extends ChangeNotifier {
     var jsonMap1 = json.decode(_profile);
     profile = SaveProfileModel.fromJson(jsonMap1);
 
+    notifyListeners();
+  }
+
+  changePassword({@required newPassword}) async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    pref.setString('pass', newPassword).then((value) {
+      String pass = pref.getString('pass').toString(); //Password
+      password = pass;
+    });
     notifyListeners();
   }
 }
