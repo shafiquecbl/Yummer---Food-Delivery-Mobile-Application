@@ -11,71 +11,51 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 import 'package:secure_hops/model/addressResponseModel.dart';
+import 'package:secure_hops/model/loginResponseModel.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MyAddress extends StatelessWidget {
-  get_adress() async {
-    Response responses = await http.post(
-        Uri.parse(
-            'https://www.ohready1.com/api/CustomersApi/getCustomerAddresses'),
-        body: {
-          'userName': "abcd",
-          'userPass': "123",
-        });
-
-    var result = json.decode(responses.body);
-    print(result);
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: appBar(context, title: 'My Address'),
       body: FutureBuilder<List<AdressResponseModel>>(
-        future: APIService().showadrs(context),
+        future:
+            APIService().showadrs(context, username: "hamxa", userpass: "1234"),
         builder: (BuildContext context,
             AsyncSnapshot<List<AdressResponseModel>> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting)
             return Center(
               child: CircularProgressIndicator(),
             );
-          return showAddress(context, snapshot.data);
+          return showAddress(context, snapshot.data!);
         },
       ),
     );
   }
 
-  showAddress(BuildContext context, List<AdressResponseModel>? snapshot) {
+  showAddress(BuildContext context, List<AdressResponseModel> responseModel) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
-      child: ListView(
+      child: Wrap(
+        direction: Axis.vertical,
         children: [
-          InkWell(
-            onTap: () {
-              get_adress();
-            },
-            child: ListTile(
-              leading: FaIcon(Icons.home_outlined),
-              title: Text('Home'),
-              subtitle: Text('8000 S Kirkland Ave, Chicago, IL 6065...'),
-            ),
-          ),
-          CustomDivider(),
-          InkWell(
-            onTap: () {},
-            child: ListTile(
-              leading: FaIcon(Icons.work_outline),
-              title: Text('Work'),
-              subtitle: Text('8000 S Kirkland Ave, Chicago, IL 6065...'),
-            ),
-          ),
-          CustomDivider(),
-          InkWell(
-            onTap: () {},
-            child: ListTile(
-              leading: FaIcon(Icons.location_pin),
-              title: Text('Other'),
-              subtitle: Text('8000 S Kirkland Ave, Chicago, IL 6065...'),
-            ),
+          Container(
+            height: 500,
+            child: ListView.builder(
+                itemCount: responseModel.length,
+                itemBuilder: (context, index) {
+                  AdressResponseModel res = responseModel[index];
+                  return InkWell(
+                    onTap: () {},
+                    child: ListTile(
+                      leading: FaIcon(Icons.home_outlined),
+                      title: Text(res.addressText.toString()),
+                      subtitle:
+                          Text('8000 S Kirkland Ave, Chicago, IL 6065...'),
+                    ),
+                  );
+                }),
           ),
           CustomDivider(),
           SizedBox(
@@ -90,4 +70,9 @@ class MyAddress extends StatelessWidget {
       ),
     );
   }
+  // Future<LoginResponseModel> getuser() async {
+  //   SharedPreferences pref = await SharedPreferences.getInstance();
+  //   String res = pref.getString('Login').toString();
+  //   var jsonMap = json.decode(res);
+  //   return LoginResponseModel.fromJson(jsonMap);
 }

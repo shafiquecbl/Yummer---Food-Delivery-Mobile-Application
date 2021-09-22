@@ -11,6 +11,7 @@ import 'package:secure_hops/Screens/Profile/Pages/My%20Promocodes/My_Promocodes.
 import 'package:secure_hops/Screens/Profile/components/profile_crad.dart';
 import 'package:secure_hops/Widgets/navigator.dart';
 import 'package:secure_hops/constants.dart';
+import 'package:secure_hops/model/getCustomerProfileModel.dart';
 import 'package:secure_hops/model/loginResponseModel.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'Pages/My Favorite/My_Favorite.dart';
@@ -157,5 +158,12 @@ class _ProfileState extends State<Profile> {
     String res = pref.getString('Login').toString();
     var jsonMap = json.decode(res);
     return LoginResponseModel.fromJson(jsonMap);
+  }
+
+  Future<GetCustomerProfileModel> getprofile() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String res = pref.getString('Profile').toString();
+    var jsonMap = json.decode(res);
+    return GetCustomerProfileModel.fromJson(jsonMap);
   }
 }

@@ -26,7 +26,7 @@ class _ChangePassState extends State<ChangePass> {
   final TextEditingController _cpassTextEditingController =
       TextEditingController();
 
-  var usercode;
+  String? usercode;
 
   @override
   void initState() {

@@ -3,9 +3,12 @@ import 'package:http/http.dart' as http;
 import 'package:secure_hops/model/addressResponseModel.dart';
 import 'package:secure_hops/model/adress_model.dart';
 import 'package:secure_hops/model/changepasswordModel.dart';
+import 'package:secure_hops/model/getCustomerProfileModel.dart';
+import 'package:secure_hops/model/getProfileModel.dart';
 import 'dart:convert';
 
 import 'package:secure_hops/model/loginModel.dart';
+import 'package:secure_hops/model/saveProfileModel.dart';
 import 'package:secure_hops/model/showaddress_model.dart';
 import 'package:secure_hops/model/signUpModel.dart';
 import 'package:secure_hops/Screens/PhoneVerification/PhoneVerificationScreen.dart';
@@ -15,8 +18,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../home.dart';
 
 class APIService {
-  var client = http.Client();
   String baseUrl = 'https://www.ohready1.com';
+  var client = http.Client();
 
 ////////////////////////SIGNUP/////////////////////////
 
@@ -45,12 +48,16 @@ class APIService {
                     username: username,
                     userpass: userpass)
                 .toJson())
-        .then((response) {
+        .then((response) async {
       var result = json.decode(response.body);
       print(result);
+      SharedPreferences pref = await SharedPreferences.getInstance();
+      pref.setString('Login', jsonEncode(result));
+      pref.setString('pass', userpass);
+
       if (result['result'] == 'true') {
         Navigator.pop(context);
-        navigatorPush(context, false, PhoneverificationScreen());
+        navigatorPush(context, false, MyHomePage());
       } else if (result['result'] == 'alreadyEmail') {
         Navigator.pop(context);
         print("Email already Exist, Use another!");
@@ -71,6 +78,7 @@ class APIService {
       return signupModel;
     });
   }
+
 ///////////////////////////LOGIN///////////////////////
 
   Future<LoginModel> login(BuildContext context, {username, userpass}) async {
@@ -149,6 +157,7 @@ class APIService {
       return addressmodel;
     });
   }
+
   ////////////////////SHOW ADDRESS//////////////////
 
   Future<List<AdressResponseModel>> showadrs(BuildContext context,
@@ -170,8 +179,7 @@ class APIService {
 
   ////////////////////Change Password//////////////////////
 
-  Future<ChangePasswordModel> changepass(BuildContext context,
-      {oldpass, newpass, usercode}) async {
+  changepass(BuildContext context, {oldpass, newpass, usercode}) async {
     return await client
         .post(Uri.parse('$baseUrl/api/CustomersApi/changePassword'),
             body: ChangePasswordModel(
@@ -189,12 +197,61 @@ class APIService {
         ScaffoldMessenger.of(context)
             .showSnackBar(SnackBar(content: const Text('Wrong old password!')));
       }
+    });
+  }
 
-      ChangePasswordModel jsonMap = json
-          .decode(response.body)
-          .map((e) => ChangePasswordModel.fromJson(e))
-          .toList();
-      return jsonMap;
+  ///////////////////SAVE PROFILE///////////////////////
+
+  Future<SaveProfileModel> saveprofile(BuildContext context,
+      {email, pass, mobileno, firstName, lastname, gender, dob, img}) async {
+    return await client
+        .post(Uri.parse('$baseUrl/api/CustomersApi/saveCustomerProfile'),
+            body: SaveProfileModel(
+                    dob: dob,
+                    email: email,
+                    firstName: firstName,
+                    gender: gender,
+                    img: img,
+                    lastname: lastname,
+                    mobileno: mobileno,
+                    pass: pass)
+                .toJson())
+        .then((response) async {
+      var result = json.decode(response.body);
+
+      SharedPreferences pref = await SharedPreferences.getInstance();
+      pref.setString('Profile', jsonEncode(result));
+      print(result);
+      if (result['result'] == 'true') {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: const Text('Changes Saved!')));
+      } else if (result['result'] == 'userNotFound') {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: const Text('User not found!')));
+      }
+      SaveProfileModel savepromodel = SaveProfileModel.fromJson(result);
+      return savepromodel;
+    });
+  }
+
+  ////////////////////////GET PROFILE////////////////
+
+  Future<GetCustomerProfileModel> getprofile(
+    BuildContext context, {
+    email,
+    pass,
+  }) async {
+    return await client.post(
+        Uri.parse('$baseUrl/api/CustomersApi/getCustomerProfile'),
+        body: {'email': email, 'pass': pass}).then((response) async {
+      print(response.body);
+      var result = json.decode(response.body);
+
+      print(result);
+
+      GetCustomerProfileModel getpromodel =
+          GetCustomerProfileModel.fromJson(result);
+      return getpromodel;
     });
   }
 }
