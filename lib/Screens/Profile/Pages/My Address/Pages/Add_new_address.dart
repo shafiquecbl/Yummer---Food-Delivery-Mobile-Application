@@ -83,9 +83,9 @@ class _AddNewAddressState extends State<AddNewAddress> {
                     focusNode: focusNode1,
                     controller: _nameTextEditingController,
                     decoration: InputDecoration(
-                      hintText: "Enter full name",
+                      hintText: "Enter place",
                       hintStyle: TextStyle(color: Colors.grey),
-                      labelText: "Full Name",
+                      labelText: "place",
                     ),
                     validator: (value) {}),
                 TextFormField(
@@ -170,9 +170,6 @@ class _AddNewAddressState extends State<AddNewAddress> {
                           username: usernName,
                           userpass: password,
                           zip: _zipTextEditingController.text);
-
-                      APIService().showadrs(context,
-                          username: usernName, userpass: password);
                     })
               ],
             ),

@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:secure_hops/model/addressResponseModel.dart';
 import 'package:secure_hops/model/adress_model.dart';
 import 'package:secure_hops/model/changepasswordModel.dart';
+import 'package:secure_hops/model/deletModel.dart';
 import 'package:secure_hops/model/getCustomerProfileModel.dart';
 import 'dart:convert';
 import 'package:secure_hops/model/loginModel.dart';
@@ -47,11 +48,10 @@ class APIService {
                 .toJson())
         .then((response) async {
       var result = json.decode(response.body);
-      print(result);
       SharedPreferences pref = await SharedPreferences.getInstance();
       pref.setString('Login', jsonEncode(result));
       pref.setString('pass', userpass);
-
+      print(result);
       if (result['result'] == 'true') {
         Navigator.pop(context);
         navigatorPush(context, false, MyHomePage());
@@ -84,7 +84,6 @@ class APIService {
             body: LoginModel(username: username, userpass: userpass).toJson())
         .then((response) async {
       var result = json.decode(response.body);
-
       SharedPreferences pref = await SharedPreferences.getInstance();
       pref.setString('Login', jsonEncode(result));
       pref.setString('pass', userpass);
@@ -173,6 +172,27 @@ class APIService {
       return jsonMap;
     });
   }
+  ////////////////////DELETE ADDRESS////////////////////
+
+  Future<DeleteModel> delete_adrs({username, userpass, addresscode}) async {
+    return await client
+        .post(Uri.parse('$baseUrl/api/CustomersApi/deleteCustomerAddress'),
+            body: DeleteModel(
+                    userName: username,
+                    userPass: userpass,
+                    addressCode: addresscode)
+                .toJson())
+        .then((response) {
+      var result = json.decode(response.body);
+      print(result);
+
+      DeleteModel jsonMap = json
+          .decode(response.body)
+          .map((e) => DeleteModel.fromJson(e))
+          .toList();
+      return jsonMap;
+    });
+  }
 
   ////////////////////Change Password//////////////////////
 
@@ -217,8 +237,18 @@ class APIService {
       var result = json.decode(response.body);
 
       SharedPreferences pref = await SharedPreferences.getInstance();
-      pref.setString('Profile', jsonEncode(result));
-      print(result);
+      pref.setString(
+          'Profile',
+          jsonEncode(SaveProfileModel(
+                  dob: dob,
+                  email: email,
+                  firstName: firstName,
+                  gender: gender,
+                  img: img,
+                  lastname: lastname,
+                  mobileno: mobileno,
+                  pass: pass)
+              .toJson()));
       if (result['result'] == 'true') {
         ScaffoldMessenger.of(context)
             .showSnackBar(SnackBar(content: const Text('Changes Saved!')));

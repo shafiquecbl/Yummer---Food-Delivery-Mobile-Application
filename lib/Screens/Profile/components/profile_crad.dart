@@ -1,14 +1,10 @@
-import 'dart:convert';
-
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:secure_hops/API/Api_Services/Api_Manager.dart';
+import 'package:provider/provider.dart';
+import 'package:secure_hops/Provider/user_provider.dart';
 import 'package:secure_hops/Screens/Profile/Pages/Edit%20Profile/Profile_Edit_Page.dart';
 import 'package:secure_hops/Widgets/navigator.dart';
 import 'package:secure_hops/constants.dart';
-import 'package:secure_hops/model/loginResponseModel.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfileCard extends StatefulWidget {
   @override
@@ -16,27 +12,10 @@ class ProfileCard extends StatefulWidget {
 }
 
 class _ProfileCardState extends State<ProfileCard> {
-  User? user = FirebaseAuth.instance.currentUser;
-
-  String? email;
-  String? password;
-  String userName = 'Example';
-  String userEmail = 'example@gmail.com';
-
   @override
   void initState() {
-    getuser().then((value) {
-      email = value.email;
-      APIService()
-          .getprofile(context, email: email, pass: password)
-          .then((value) {
-        setState(() {
-          userName = '${value.firstName} ${value.lastName}';
-
-          userEmail = value.email.toString();
-        });
-      });
-    });
+    LoginStorage provider = Provider.of(context, listen: false);
+    provider.getuser();
     super.initState();
   }
 
@@ -52,13 +31,19 @@ class _ProfileCardState extends State<ProfileCard> {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            profile(name: '$userName', email: '$userEmail'),
+            Consumer<LoginStorage>(builder: (context, login, child) {
+              return profile(
+                  name: login.profile == null
+                      ? login.loginResponseModel!.userName
+                      : '${login.profile!.firstName}' +
+                          '${login.profile!.lastname}',
+                  email: login.loginResponseModel!.email);
+            }),
             IconButton(
                 onPressed: () {
                   navigatorPush(context, true, ProfileEditPage());
                 },
                 icon: FaIcon(
-                  // Icons.edit
                   FontAwesomeIcons.edit,
                   color: Colors.grey,
                 ))
@@ -86,14 +71,5 @@ class _ProfileCardState extends State<ProfileCard> {
         ),
       ),
     );
-  }
-
-  Future<LoginResponseModel> getuser() async {
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    password = preferences.getString('pass');
-    SharedPreferences pref = await SharedPreferences.getInstance();
-    String res = pref.getString('Login').toString();
-    var jsonMap = json.decode(res);
-    return LoginResponseModel.fromJson(jsonMap);
   }
 }
