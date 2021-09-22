@@ -10,7 +10,13 @@ import 'package:secure_hops/Widgets/button.dart';
 import 'package:secure_hops/Widgets/navigator.dart';
 import 'package:secure_hops/model/addressResponseModel.dart';
 
-class MyAddress extends StatelessWidget {
+class MyAddress extends StatefulWidget {
+  @override
+  State<MyAddress> createState() => _MyAddressState();
+}
+
+class _MyAddressState extends State<MyAddress> {
+  AdressResponseModel? res;
   @override
   Widget build(BuildContext context) {
     return Consumer<LoginStorage>(builder: (context, login, child) {
@@ -25,6 +31,22 @@ class MyAddress extends StatelessWidget {
             if (snapshot.connectionState == ConnectionState.waiting)
               return Center(
                 child: CircularProgressIndicator(),
+              );
+            if (snapshot.data!.length == 0)
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Center(
+                    child: Text(
+                      'No address.\nPlease add new address',
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 30,
+                  ),
+                  addAddressButton()
+                ],
               );
             return showAddress(context, snapshot.data!);
           },
@@ -42,10 +64,17 @@ class MyAddress extends StatelessWidget {
             child: ListView.builder(
                 itemCount: responseModel.length,
                 itemBuilder: (context, index) {
-                  AdressResponseModel res = responseModel[index];
+                  res = responseModel[index]; //assign Value
                   return Dismissible(
                     background: slideRightBackground(),
                     secondaryBackground: slideLeftBackground(),
+                    confirmDismiss: (direction) async {
+                      if (direction == DismissDirection.endToStart) {
+                        return await delete();
+                      } else {
+                        print("edit wala implement nh hua abi");
+                      }
+                    },
                     key: Key(index.toString()),
                     child: InkWell(
                       onTap: () {},
@@ -55,25 +84,26 @@ class MyAddress extends StatelessWidget {
                             : index == 1
                                 ? Icons.work_outline_outlined
                                 : Icons.location_pin),
-                        title: Text(res.fullName.toString()),
-                        subtitle: Text(res.addressText.toString()),
+                        title: Text(res!.fullName.toString()),
+                        subtitle: Text(res!.addressText.toString()),
                       ),
                     ),
                   );
                 }),
           ),
           CustomDivider(),
-          SizedBox(
-            height: 30,
-          ),
-          MyButton(
-              text: 'ADD NEW ADDRESS',
-              onPressed: () {
-                navigatorPush(context, false, AddNewAddress());
-              })
+          addAddressButton(),
         ],
       ),
     );
+  }
+
+  addAddressButton() {
+    return MyButton(
+        text: 'ADD NEW ADDRESS',
+        onPressed: () {
+          navigatorPush(context, false, AddNewAddress());
+        });
   }
 
   Widget slideRightBackground() {
@@ -134,5 +164,10 @@ class MyAddress extends StatelessWidget {
     );
   }
 
-  delete() {}
+  delete() {
+    APIService().delete_adrs(
+        addresscode: res!.addressCode,
+        username: LoginStorage().loginResponseModel!.userName,
+        userpass: LoginStorage().password);
+  }
 }

@@ -33,10 +33,10 @@ class _ProfileCardState extends State<ProfileCard> {
           children: <Widget>[
             Consumer<LoginStorage>(builder: (context, login, child) {
               return profile(
-                  name: login.profile != null
-                      ? '${login.profile!.firstName}' +
-                          '${login.profile!.lastname}'
-                      : login.loginResponseModel!.userName,
+                  name: login.profile == null
+                      ? login.loginResponseModel!.userName
+                      : '${login.profile!.firstName}' +
+                          '${login.profile!.lastname}',
                   email: login.loginResponseModel!.email);
             }),
             IconButton(

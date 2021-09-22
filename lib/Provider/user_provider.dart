@@ -14,6 +14,7 @@ class LoginStorage extends ChangeNotifier {
 
     String login = pref.getString('Login').toString(); //LoginResponse
     var jsonMap = json.decode(login);
+    print(jsonMap);
     loginResponseModel = LoginResponseModel.fromJson(jsonMap);
 
     String pass = pref.getString('pass').toString(); //Password
@@ -21,7 +22,10 @@ class LoginStorage extends ChangeNotifier {
 
     String _profile = pref.getString('Profile').toString();
     var jsonMap1 = json.decode(_profile);
-    profile = SaveProfileModel.fromJson(jsonMap1);
+    print(jsonMap1);
+    if (jsonMap1 != null) {
+      profile = SaveProfileModel.fromJson(jsonMap1);
+    }
 
     notifyListeners();
   }
