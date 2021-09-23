@@ -32,6 +32,9 @@ class MyApp extends StatelessWidget {
           home: FutureBuilder(
             future: getuser(),
             builder: (BuildContext context, AsyncSnapshot snapshot) {
+              LoginStorage provider =
+                  Provider.of<LoginStorage>(context, listen: false);
+              provider.getuser();
               if (snapshot.connectionState == ConnectionState.waiting)
                 return Container(
                   color: Colors.white,

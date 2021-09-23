@@ -1,7 +1,7 @@
 class DeleteModel {
   String? userName;
   String? userPass;
-  int? addressCode;
+  String? addressCode;
 
   DeleteModel({this.userName, this.userPass, this.addressCode});
 

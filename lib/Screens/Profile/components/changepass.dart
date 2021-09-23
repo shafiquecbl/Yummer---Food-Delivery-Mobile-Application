@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -6,8 +5,6 @@ import 'package:secure_hops/API/Api_Services/Api_Manager.dart';
 import 'package:secure_hops/Provider/user_provider.dart';
 import 'package:secure_hops/Widgets/AppBar.dart';
 import 'package:secure_hops/Widgets/button.dart';
-import 'package:secure_hops/model/loginResponseModel.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../constants.dart';
 
@@ -27,6 +24,7 @@ class _ChangePassState extends State<ChangePass> {
       TextEditingController();
   final TextEditingController _cpassTextEditingController =
       TextEditingController();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   String? usercode;
   LoginStorage? loginStorage;
@@ -74,45 +72,86 @@ class _ChangePassState extends State<ChangePass> {
                     ),
                   ),
                   box(),
-                  TextFormField(
-                      decoration: InputDecoration(
-                        focusedBorder: focusedBorder,
-                        hintText: "Enter old password",
-                        hintStyle: TextStyle(color: Colors.grey),
-                        labelText: "Old Password",
+                  Form(
+                    key: _formKey,
+                    child: Column(children: [
+                      TextFormField(
+                        decoration: InputDecoration(
+                          focusedBorder: focusedBorder,
+                          hintText: "Enter old password",
+                          hintStyle: TextStyle(color: Colors.grey),
+                          labelText: "Old Password",
+                        ),
+                        controller: _oldpassTextEditingController,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter old Password';
+                          }
+                          if (value.trim().length < 4) {
+                            return 'Password must be at least 4 characters in length';
+                          }
+
+                          return null;
+                        },
                       ),
-                      controller: _oldpassTextEditingController,
-                      validator: (value) {}),
-                  box(),
-                  TextFormField(
-                      decoration: InputDecoration(
-                        focusedBorder: focusedBorder,
-                        hintText: "Enter new password",
-                        hintStyle: TextStyle(color: Colors.grey),
-                        labelText: "New PassWord",
+                      box(),
+                      TextFormField(
+                        decoration: InputDecoration(
+                          focusedBorder: focusedBorder,
+                          hintText: "Enter new password",
+                          hintStyle: TextStyle(color: Colors.grey),
+                          labelText: "New PassWord",
+                        ),
+                        controller: _newpassTextEditingController,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter new Password';
+                          }
+                          if (value.trim().length < 4) {
+                            return 'Password must be at least 4 characters in length';
+                          }
+
+                          return null;
+                        },
                       ),
-                      controller: _newpassTextEditingController,
-                      validator: (value) {}),
-                  box(),
-                  TextFormField(
-                      decoration: InputDecoration(
-                        focusedBorder: focusedBorder,
-                        hintText: "Enter confirm password",
-                        hintStyle: TextStyle(color: Colors.grey),
-                        labelText: "Confirm PassWord",
+                      box(),
+                      TextFormField(
+                        decoration: InputDecoration(
+                          focusedBorder: focusedBorder,
+                          hintText: "Enter confirm password",
+                          hintStyle: TextStyle(color: Colors.grey),
+                          labelText: "Confirm PassWord",
+                        ),
+                        controller: _cpassTextEditingController,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter confirm Password';
+                          }
+                          if (value.trim().length < 4) {
+                            return 'Password must be at least 4 characters in length';
+                          }
+                          if (_newpassTextEditingController.text !=
+                              _cpassTextEditingController.text) {
+                            return 'Password does not match!';
+                          }
+                          return null;
+                        },
                       ),
-                      controller: _cpassTextEditingController,
-                      validator: (value) {}),
+                    ]),
+                  ),
                   box(),
                   box(),
                   box(),
                   MyButton(
                       text: 'SAVE PASSWORD',
                       onPressed: () {
-                        APIService().changepass(context,
-                            newpass: _newpassTextEditingController.text,
-                            oldpass: _oldpassTextEditingController.text,
-                            usercode: login.loginResponseModel!.userCode);
+                        if (_formKey.currentState!.validate()) {
+                          APIService().changepass(context,
+                              newpass: _newpassTextEditingController.text,
+                              oldpass: _oldpassTextEditingController.text,
+                              usercode: login.loginResponseModel!.userCode
+                                  .toString());
+                        }
                       })
                 ],
               ),

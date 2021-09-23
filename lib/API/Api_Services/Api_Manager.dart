@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:secure_hops/Screens/Profile/Pages/My%20Address/My_Address.dart';
+import 'package:secure_hops/Screens/Profile/Pages/My%20Address/Pages/Add_new_address.dart';
 import 'package:secure_hops/model/addressResponseModel.dart';
 import 'package:secure_hops/model/adress_model.dart';
 import 'package:secure_hops/model/changepasswordModel.dart';
@@ -51,6 +53,7 @@ class APIService {
       SharedPreferences pref = await SharedPreferences.getInstance();
       pref.setString('Login', jsonEncode(result));
       pref.setString('pass', userpass);
+      pref.remove('Profile');
       print(result);
       if (result['result'] == 'true') {
         Navigator.pop(context);
@@ -144,6 +147,8 @@ class APIService {
       if (result['result'] == 'true') {
         ScaffoldMessenger.of(context)
             .showSnackBar(SnackBar(content: const Text('Address Registered!')));
+        Navigator.pop(context);
+        // navigatorPush(context, false, MyAddress());
       } else {
         ScaffoldMessenger.of(context)
             .showSnackBar(SnackBar(content: const Text('User not exits!')));
@@ -174,7 +179,8 @@ class APIService {
   }
   ////////////////////DELETE ADDRESS////////////////////
 
-  Future<DeleteModel> delete_adrs({username, userpass, addresscode}) async {
+  // ignore: non_constant_identifier_names
+  delete_adrs(BuildContext context, {username, userpass, addresscode}) async {
     return await client
         .post(Uri.parse('$baseUrl/api/CustomersApi/deleteCustomerAddress'),
             body: DeleteModel(
@@ -185,12 +191,10 @@ class APIService {
         .then((response) {
       var result = json.decode(response.body);
       print(result);
-
-      DeleteModel jsonMap = json
-          .decode(response.body)
-          .map((e) => DeleteModel.fromJson(e))
-          .toList();
-      return jsonMap;
+      if (result['result'] == 'true') {
+        Navigator.of(context, rootNavigator: true).pushReplacement(
+            MaterialPageRoute(builder: (BuildContext ctx) => MyAddress()));
+      }
     });
   }
 
@@ -209,8 +213,8 @@ class APIService {
       if (result['result'] == 'true') {
         ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: const Text('Password changed successfully!')));
-      } else if (result['result'] == 'OldPassWrong') {
         Navigator.pop(context);
+      } else if (result['result'] == 'OldPassWrong') {
         ScaffoldMessenger.of(context)
             .showSnackBar(SnackBar(content: const Text('Wrong old password!')));
       }

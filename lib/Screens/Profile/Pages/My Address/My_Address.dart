@@ -9,6 +9,7 @@ import 'package:secure_hops/Widgets/AppBar.dart';
 import 'package:secure_hops/Widgets/button.dart';
 import 'package:secure_hops/Widgets/navigator.dart';
 import 'package:secure_hops/model/addressResponseModel.dart';
+import 'package:secure_hops/model/loginResponseModel.dart';
 
 class MyAddress extends StatefulWidget {
   @override
@@ -16,6 +17,7 @@ class MyAddress extends StatefulWidget {
 }
 
 class _MyAddressState extends State<MyAddress> {
+  LoginStorage? loginStorage;
   AdressResponseModel? res;
   @override
   Widget build(BuildContext context) {
@@ -102,7 +104,10 @@ class _MyAddressState extends State<MyAddress> {
     return MyButton(
         text: 'ADD NEW ADDRESS',
         onPressed: () {
-          navigatorPush(context, false, AddNewAddress());
+          // navigatorPush(context, false, AddNewAddress());
+          Navigator.of(context, rootNavigator: true).pushReplacement(
+              MaterialPageRoute(
+                  builder: (BuildContext ctx) => AddNewAddress()));
         });
   }
 
@@ -164,10 +169,21 @@ class _MyAddressState extends State<MyAddress> {
     );
   }
 
+  @override
+  void initState() {
+    LoginStorage provider = Provider.of(context, listen: false);
+    provider.getuser();
+
+    super.initState();
+  }
+
   delete() {
-    APIService().delete_adrs(
-        addresscode: res!.addressCode,
-        username: LoginStorage().loginResponseModel!.userName,
-        userpass: LoginStorage().password);
+    LoginStorage provider = Provider.of(context, listen: false);
+    provider.getuser().then((value) {
+      APIService().delete_adrs(context,
+          addresscode: res!.addressCode.toString(),
+          username: provider.loginResponseModel!.email,
+          userpass: provider.password);
+    });
   }
 }

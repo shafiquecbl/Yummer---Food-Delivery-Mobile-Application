@@ -128,6 +128,7 @@ class _ProfileState extends State<Profile> {
                                 await SharedPreferences.getInstance();
                             prefs.remove('Login');
                             prefs.remove('pass');
+                            prefs.remove('Profile');
                             Navigator.of(context, rootNavigator: true)
                                 .pushReplacement(MaterialPageRoute(
                                     builder: (BuildContext ctx) =>
