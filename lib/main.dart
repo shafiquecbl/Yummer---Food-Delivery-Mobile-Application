@@ -6,7 +6,8 @@ import 'package:secure_hops/constants.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:secure_hops/home.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'Provider/user_provider.dart';
 import 'model/loginResponseModel.dart';
 
@@ -26,6 +27,16 @@ class MyApp extends StatelessWidget {
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
           title: 'OhReady!',
+          localizationsDelegates: [
+            AppLocalizations.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          supportedLocales: [
+            Locale('en', ''), // English, no country code
+            Locale('es', ''), // Spanish, no country code
+          ],
           theme: ThemeData(
             primarySwatch: primaryColor,
           ),

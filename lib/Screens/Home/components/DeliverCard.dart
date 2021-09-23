@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:secure_hops/Screens/Home/AllOffers.dart';
 import 'package:secure_hops/Widgets/navigator.dart';
 import 'package:secure_hops/constants.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'Categories.dart';
 import 'ItemList.dart';
@@ -39,7 +40,7 @@ class DeliverCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    Text('deliver to:',
+                    Text(AppLocalizations.of(context)!.deliverto,
                         style: TextStyle(
                             fontSize: 20,
                             color: kWhiteColor,
