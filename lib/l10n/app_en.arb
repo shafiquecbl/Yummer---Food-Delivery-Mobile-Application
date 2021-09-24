@@ -1,3 +1,11 @@
 {
-    "deliverto":"deliver to"
+    "deliverto":"deliver to",
+    "FindTheRestaurant!":"Find The Restaurant!",
+    "ChooseFavoriteDishes! ":"Choose Favorite Dishes! ",
+    "GetYourFoodDelivery!":"Get Your Food Delivery!",
+    "Continue":"Continue",
+    "Next":"Next",
+    "Yourpasswordhasbeenreset!":"Your password  has been reset!",
+    "Done":"Done",
+    "Don't haveaccount?":"Don't have account?"
 }

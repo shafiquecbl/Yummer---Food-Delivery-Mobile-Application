@@ -1,3 +1,11 @@
 {
-    "deliverto":"entregar a"
+    "deliverto":"entregar a",
+    "FindTheRestaurant!":"Encuentra el restaurante!",
+    "ChooseFavoriteDishes! ":"Elija platos favoritos!",
+    "GetYourFoodDelivery!":"Obtenga su comida a domicilio!",
+    "Continue":"Continuar",
+    "Next":"Próximo",
+    "Yourpasswordhasbeenreset!":"Tu contraseña ha sido restablecida!",
+    "Done":"Hecho",
+    "Don'thaveaccount?":"No tienes cuenta?"
 }
