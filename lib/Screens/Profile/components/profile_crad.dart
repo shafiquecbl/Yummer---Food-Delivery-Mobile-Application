@@ -12,13 +12,8 @@ class ProfileCard extends StatefulWidget {
 }
 
 class _ProfileCardState extends State<ProfileCard> {
+  String? sample = "Add Name";
   @override
-  void initState() {
-    LoginStorage provider = Provider.of(context, listen: false);
-    provider.getuser();
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -33,10 +28,10 @@ class _ProfileCardState extends State<ProfileCard> {
           children: <Widget>[
             Consumer<LoginStorage>(builder: (context, login, child) {
               return profile(
-                  name: login.profile == null
-                      ? login.loginResponseModel!.userName
-                      : '${login.profile!.firstName}' +
-                          '${login.profile!.lastname}',
+                  name: login.profile != null
+                      ? '${login.profile!.firstName}' +
+                          '${login.profile!.lastname}'
+                      : sample,
                   email: login.loginResponseModel!.email);
             }),
             IconButton(

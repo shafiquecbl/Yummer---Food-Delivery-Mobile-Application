@@ -412,8 +412,8 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
         context: context,
         initialDate: selectedDate,
         initialDatePickerMode: DatePickerMode.day,
-        firstDate: DateTime.now(),
-        lastDate: DateTime(2101));
+        firstDate: DateTime(1900),
+        lastDate: DateTime(2022));
     if (picked != null)
       setState(() {
         selectedDate = picked;
