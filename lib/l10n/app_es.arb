@@ -1,11 +1,11 @@
 {
     "deliverto":"entregar a",
-    "FindTheRestaurant!":"Encuentra el restaurante!",
-    "ChooseFavoriteDishes! ":"Elija platos favoritos!",
-    "GetYourFoodDelivery!":"Obtenga su comida a domicilio!",
-    "Continue":"Continuar",
-    "Next":"Próximo",
-    "Yourpasswordhasbeenreset!":"Tu contraseña ha sido restablecida!",
-    "Done":"Hecho",
-    "Don'thaveaccount?":"No tienes cuenta?"
+    "findtherestaurant":"Encuentra el restaurante!",
+    "choosefavoritedishes":"Elija platos favoritos!",
+    "getYourfooddelivery":"Obtenga su comida a domicilio!",
+    "continue":"Continuar",
+    "next":"Próximo",
+    "yourpasswordhasbeenreset":"Tu contraseña ha sido restablecida!",
+    "done":"Hecho",
+    "donthaveaccount":"No tienes cuenta?"
 }
