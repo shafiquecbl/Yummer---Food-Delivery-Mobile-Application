@@ -30,6 +30,7 @@ class _ProfileCardState extends State<ProfileCard> {
               return profile(
                   name: login.profile != null
                       ? '${login.profile!.firstName}' +
+                          " " +
                           '${login.profile!.lastname}'
                       : sample,
                   email: login.loginResponseModel!.email);

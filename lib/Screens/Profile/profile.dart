@@ -1,7 +1,9 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 import 'package:secure_hops/API/Api_Services/Api_Manager.dart';
+import 'package:secure_hops/Provider/user_provider.dart';
 import 'package:secure_hops/Screens/Onboarding/OnBoarding.dart';
 import 'package:secure_hops/Screens/Profile/Pages/My%20Address/My_Address.dart';
 import 'package:secure_hops/Screens/Profile/components/profile_crad.dart';
@@ -129,6 +131,10 @@ class _ProfileState extends State<Profile> {
                             prefs.remove('Login');
                             prefs.remove('pass');
                             prefs.remove('Profile');
+                            LoginStorage provider =
+                                Provider.of(context, listen: false);
+                            // ignore: unnecessary_statements
+                            provider.loginResponseModel == null;
                             Navigator.of(context, rootNavigator: true)
                                 .pushReplacement(MaterialPageRoute(
                                     builder: (BuildContext ctx) =>

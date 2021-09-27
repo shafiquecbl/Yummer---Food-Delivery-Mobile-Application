@@ -26,7 +26,7 @@ class _MyAddressState extends State<MyAddress> {
         appBar: appBar(context, title: 'My Address'),
         body: FutureBuilder<List<AdressResponseModel>>(
           future: APIService().showadrs(context,
-              username: login.loginResponseModel!.userName,
+              username: login.loginResponseModel!.email,
               userpass: login.password),
           builder: (BuildContext context,
               AsyncSnapshot<List<AdressResponseModel>> snapshot) {

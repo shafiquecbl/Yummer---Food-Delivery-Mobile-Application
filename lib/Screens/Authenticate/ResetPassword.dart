@@ -47,7 +47,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                 Padding(
                   padding: const EdgeInsets.only(right: 60.0),
                   child: Text(
-                    "Enter New Password and confirm.",
+                    "Enter New Password and confirm password.",
                     style: TextStyle(color: textColor, fontSize: 16),
                   ),
                 ),

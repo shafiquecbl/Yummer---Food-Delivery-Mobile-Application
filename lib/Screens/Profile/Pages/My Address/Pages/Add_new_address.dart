@@ -67,6 +67,8 @@ class _AddNewAddressState extends State<AddNewAddress> {
     focusNode1.dispose();
   }
 
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -76,102 +78,132 @@ class _AddNewAddressState extends State<AddNewAddress> {
         children: [
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 25),
-            child: Column(
-              children: [
-                box(),
-                TextFormField(
-                    focusNode: focusNode1,
-                    controller: _nameTextEditingController,
-                    decoration: InputDecoration(
-                      hintText: "Enter place",
-                      hintStyle: TextStyle(color: Colors.grey),
-                      labelText: "place",
-                    ),
-                    validator: (value) {}),
-                TextFormField(
-                    decoration: InputDecoration(
-                      hintText: "Enter mobile number",
-                      hintStyle: TextStyle(color: Colors.grey),
-                      labelText: "Mobile",
-                    ),
-                    controller: _mobileTextEditingController,
-                    validator: (value) {}),
-                TextFormField(
-                    keyboardType: TextInputType.number,
-                    decoration: InputDecoration(
-                      hintText: "Enter state code",
-                      hintStyle: TextStyle(color: Colors.grey),
-                      labelText: "State Code",
-                    ),
-                    controller: _stateTextEditingController,
-                    validator: (value) {}),
-                TextFormField(
-                    decoration: InputDecoration(
-                      hintText: "Enter city Code",
-                      hintStyle: TextStyle(color: Colors.grey),
-                      labelText: "City Code",
-                    ),
-                    keyboardType: TextInputType.number,
-                    controller: _cityTextEditingController,
-                    validator: (value) {}),
-                TextFormField(
-                    decoration: InputDecoration(
-                      hintText: "Enter zip-code",
-                      hintStyle: TextStyle(color: Colors.grey),
-                      labelText: "Zip-Code",
-                    ),
-                    controller: _zipTextEditingController,
-                    validator: (value) {}),
-                TextFormField(
-                    decoration: InputDecoration(
-                      hintText: "Enter address",
-                      hintStyle: TextStyle(color: Colors.grey),
-                      labelText: "New Address",
-                    ),
-                    controller: _addressTextEditingController,
-                    validator: (value) {}),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: <Widget>[
-                    Radio(
-                      activeColor: kPrimaryColor,
-                      value: 1,
-                      groupValue: radioValue,
-                      onChanged: handleRadioValueChanged,
-                    ),
-                    Text(
-                      'Use Current Location',
-                      style:
-                          new TextStyle(fontSize: 16.0, color: Colors.black54),
-                    ),
-                  ],
-                ),
-                box(),
-                box(),
-                MyButton(
-                    text: 'SAVE',
-                    onPressed: () async {
-                      SharedPreferences preferences =
-                          await SharedPreferences.getInstance();
-                      password = preferences.getString('pass');
+            child: Form(
+              key: _formKey,
+              child: Column(
+                children: [
+                  box(),
+                  TextFormField(
+                      focusNode: focusNode1,
+                      controller: _nameTextEditingController,
+                      decoration: InputDecoration(
+                        hintText: "Enter place",
+                        hintStyle: TextStyle(color: Colors.grey),
+                        labelText: "place",
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter your place name';
+                        }
+                      }),
+                  TextFormField(
+                      keyboardType: TextInputType.phone,
+                      decoration: InputDecoration(
+                        hintText: "Enter mobile number",
+                        hintStyle: TextStyle(color: Colors.grey),
+                        labelText: "Mobile",
+                      ),
+                      controller: _mobileTextEditingController,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter mobile number';
+                        }
+                      }),
+                  TextFormField(
+                      keyboardType: TextInputType.number,
+                      decoration: InputDecoration(
+                        hintText: "Enter state code",
+                        hintStyle: TextStyle(color: Colors.grey),
+                        labelText: "State Code",
+                      ),
+                      controller: _stateTextEditingController,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter state code';
+                        }
+                      }),
+                  TextFormField(
+                      decoration: InputDecoration(
+                        hintText: "Enter city Code",
+                        hintStyle: TextStyle(color: Colors.grey),
+                        labelText: "City Code",
+                      ),
+                      keyboardType: TextInputType.number,
+                      controller: _cityTextEditingController,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter city code';
+                        }
+                      }),
+                  TextFormField(
+                      decoration: InputDecoration(
+                        hintText: "Enter zip-code",
+                        hintStyle: TextStyle(color: Colors.grey),
+                        labelText: "Zip-Code",
+                      ),
+                      controller: _zipTextEditingController,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter zip-code';
+                        }
+                      }),
+                  TextFormField(
+                      decoration: InputDecoration(
+                        hintText: "Enter address",
+                        hintStyle: TextStyle(color: Colors.grey),
+                        labelText: "New Address",
+                      ),
+                      controller: _addressTextEditingController,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter new Address';
+                        }
+                      }),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                      Radio(
+                        activeColor: kPrimaryColor,
+                        value: 1,
+                        groupValue: radioValue,
+                        onChanged: handleRadioValueChanged,
+                      ),
+                      Text(
+                        'Use Current Location',
+                        style: new TextStyle(
+                            fontSize: 16.0, color: Colors.black54),
+                      ),
+                    ],
+                  ),
+                  box(),
+                  box(),
+                  MyButton(
+                      text: 'SAVE',
+                      onPressed: () async {
+                        if (_formKey.currentState!.validate()) {
+                          SharedPreferences preferences =
+                              await SharedPreferences.getInstance();
+                          password = preferences.getString('pass');
 
-                      APIService().addAddress(context,
-                          address: _addressTextEditingController.text,
-                          adrscode: "1",
-                          area: "1",
-                          city: _cityTextEditingController.text,
-                          country: "1",
-                          fullname: _nameTextEditingController.text,
-                          lat: "0",
-                          long: "0",
-                          mobilenum: _mobileTextEditingController.text,
-                          state: _stateTextEditingController.text,
-                          update: "false",
-                          username: usernName,
-                          userpass: password,
-                          zip: _zipTextEditingController.text);
-                    })
-              ],
+                          APIService().addAddress(context,
+                              address: _addressTextEditingController.text,
+                              adrscode: "1",
+                              area: "1",
+                              city: _cityTextEditingController.text,
+                              country: "1",
+                              fullname: _nameTextEditingController.text,
+                              lat: "0",
+                              long: "0",
+                              mobilenum: _mobileTextEditingController.text,
+                              state: _stateTextEditingController.text,
+                              update: "false",
+                              username: usernName,
+                              userpass: password,
+                              zip: _zipTextEditingController.text);
+                        }
+                      })
+                ],
+              ),
             ),
           )
         ],

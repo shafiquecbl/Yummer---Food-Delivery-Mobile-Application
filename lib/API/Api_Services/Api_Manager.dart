@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:secure_hops/Screens/Profile/Pages/My%20Address/My_Address.dart';
-import 'package:secure_hops/Screens/Profile/Pages/My%20Address/Pages/Add_new_address.dart';
+
 import 'package:secure_hops/model/addressResponseModel.dart';
 import 'package:secure_hops/model/adress_model.dart';
 import 'package:secure_hops/model/changepasswordModel.dart';
