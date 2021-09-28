@@ -174,14 +174,18 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
           CircleAvatar(
               radius: 60,
               backgroundColor: Colors.grey[200],
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(70),
-                child: Image.network(
-                  demoAvatar,
-                  width: 120,
-                  height: 120,
-                  fit: BoxFit.cover,
-                ),
+              child: ClipOval(
+                child: file == null
+                    ? Icon(
+                        Icons.person,
+                        size: 100,
+                      )
+                    : Image.file(
+                        file!,
+                        fit: BoxFit.cover,
+                        height: 120,
+                        width: 120,
+                      ),
               )),
           Positioned(
               bottom: 0,
@@ -364,7 +368,7 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
             firstName: firstName,
             lastname: lastName,
             mobileno: phoneNo,
-            img: "",
+            // // img: file,
             dob: dateofbirth,
             gender: gender)
         .then((value) {

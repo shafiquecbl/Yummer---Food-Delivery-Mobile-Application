@@ -225,44 +225,52 @@ class APIService {
 
   Future<SaveProfileModel> saveprofile(BuildContext context,
       {email, pass, mobileno, firstName, lastname, gender, dob, img}) async {
-    return await client
-        .post(Uri.parse('$baseUrl/api/CustomersApi/saveCustomerProfile'),
-            body: SaveProfileModel(
-                    dob: dob,
-                    email: email,
-                    firstName: firstName,
-                    gender: gender,
-                    img: img,
-                    lastname: lastname,
-                    mobileno: mobileno,
-                    pass: pass)
-                .toJson())
-        .then((response) async {
-      var result = json.decode(response.body);
+    late String result;
+    http.MultipartRequest request = http.MultipartRequest(
+      "POST",
+      Uri.parse('$baseUrl/admin/manage/createStudent'),
+    );
+    request.fields['dob'] = dob;
+    request.fields['email'] = email;
+    request.fields['pass'] = pass;
+    request.fields['gender'] = gender;
+    request.fields['firstName'] = firstName;
+    request.fields['lastname'] = lastname;
+    request.files.add(new http.MultipartFile(
+        'image', img!.readStream!, img.size,
+        filename: img.name));
+    //-------Send request
+    await request.send().then((value) async {
+      //------Read response
+      result = await value.stream.bytesToString();
 
-      SharedPreferences pref = await SharedPreferences.getInstance();
-      pref.setString(
-          'Profile',
-          jsonEncode(SaveProfileModel(
-                  dob: dob,
-                  email: email,
-                  firstName: firstName,
-                  gender: gender,
-                  img: img,
-                  lastname: lastname,
-                  mobileno: mobileno,
-                  pass: pass)
-              .toJson()));
-      if (result['result'] == 'true') {
-        ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: const Text('Changes Saved!')));
-      } else if (result['result'] == 'userNotFound') {
-        ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: const Text('User not found!')));
-      }
-      SaveProfileModel savepromodel = SaveProfileModel.fromJson(result);
-      return savepromodel;
+      //-------Your response
+      print(result);
     });
+
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    pref.setString(
+        'Profile',
+        jsonEncode(SaveProfileModel(
+                dob: dob,
+                email: email,
+                firstName: firstName,
+                gender: gender,
+                img: img,
+                lastname: lastname,
+                mobileno: mobileno,
+                pass: pass)
+            .toJson()));
+    return saveprofile(context);
+    // if (result['result'] == 'true') {
+    //   ScaffoldMessenger.of(context)
+    //       .showSnackBar(SnackBar(content: const Text('Changes Saved!')));
+    // } else if (result['result'] == 'userNotFound') {
+    //   ScaffoldMessenger.of(context)
+    //       .showSnackBar(SnackBar(content: const Text('User not found!')));
+    // }
+    // SaveProfileModel savepromodel = SaveProfileModel.fromJson(result);
+    // return savepromodel;
   }
 
   ////////////////////////GET PROFILE////////////////
